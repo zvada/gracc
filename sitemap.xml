@@ -17,6 +17,12 @@
      <changefreq>daily</changefreq>
     </url>
         
+    <url>
+     <loc>None/dev-docs/message-queues/</loc>
+     <lastmod>2016-04-26</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
     
 
 </urlset>

@@ -34,6 +34,16 @@
             "location": "/dev-docs/agent-arch/#listener-agent", 
             "text": "", 
             "title": "Listener Agent"
+        }, 
+        {
+            "location": "/dev-docs/message-queues/", 
+            "text": "Message Queues\n\n\nMessage queues used in GRACC\n\n\n\n\nWell known message queues used:\n\n\n\n\n/gracc.\ncollector\n.raw\n - Listens to raw records to insert into the collector.  This is the interface that probes would send raw records.\n\n\n/gracc.\ndb\n.summary\n - Listens for summary records to insert into a specific \ndb\n.  This is used to replicate summary records from other collectors or db's.\n\n\n/gracc.\ndb\n.raw\n - \n\n\n/gracc.\ndb\n.requests\n - The \nAd Agent\n listens to this queue for requests for raw and summary replications.", 
+            "title": "Message Queues"
+        }, 
+        {
+            "location": "/dev-docs/message-queues/#message-queues", 
+            "text": "Message queues used in GRACC   Well known message queues used:   /gracc. collector .raw  - Listens to raw records to insert into the collector.  This is the interface that probes would send raw records.  /gracc. db .summary  - Listens for summary records to insert into a specific  db .  This is used to replicate summary records from other collectors or db's.  /gracc. db .raw  -   /gracc. db .requests  - The  Ad Agent  listens to this queue for requests for raw and summary replications.", 
+            "title": "Message Queues"
         }
     ]
 }
