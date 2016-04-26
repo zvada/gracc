@@ -7,3 +7,5 @@ pages:
   - Development Docs:
     - Agent Architecture: dev-docs/agent-arch.md
 
+extra_css: 
+  - css/extra.css
