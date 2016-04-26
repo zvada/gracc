@@ -1,0 +1,7 @@
+site_name: GRACC Documentation
+repo_url: https://github.com/opensciencegrid/gracc
+copyright: Open Science Grid
+
+pages:
+  - 'Introduction': 'index.md'
+
