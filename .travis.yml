@@ -1,0 +1,18 @@
+
+env:
+  global:
+    - GIT_NAME: "'Markdown autodeploy'"
+    - GIT_EMAIL: djw8605@gmail.com
+    - GH_REF: github.com/opensciencegrid/gracc.git
+
+language: python
+before_script:
+- pip install mkdocs
+- pip install MarkdownHighlight
+script:
+- git config user.name "Automatic Publish"
+- git config user.email "djw8605@gmail.com"
+- git remote add gh-token "https://${GH_TOKEN}@${GH_REF}";
+- git fetch gh-token && git fetch gh-token gh-pages:gh-pages;
+- if [ "${TRAVIS_PULL_REQUEST}" = "false" ]; then PYTHONPATH=src/ mkdocs gh-deploy -v --clean --remote-name gh-token; fi;
+
