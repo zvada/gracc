@@ -1,0 +1,14 @@
+{
+    "docs": [
+        {
+            "location": "/", 
+            "text": "GRACC\n\n\nGratia-compatible Collector for Grid Accounting Records\n\n\n\n\nWelcome to the GRACC \n\n\nRepositories of interest:\n\n\n\n\nGRACC Collector\n\n\nGRACC Monitoring Emails", 
+            "title": "Introduction"
+        }, 
+        {
+            "location": "/#gracc", 
+            "text": "Gratia-compatible Collector for Grid Accounting Records   Welcome to the GRACC   Repositories of interest:   GRACC Collector  GRACC Monitoring Emails", 
+            "title": "GRACC"
+        }
+    ]
+}
