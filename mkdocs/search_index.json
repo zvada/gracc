@@ -12,13 +12,18 @@
         }, 
         {
             "location": "/dev-docs/agent-arch/", 
-            "text": "Agent Architecture\n\n\nThe agents that coordinate for GRACC\n\n\n\n\nThere are many agents which work together for GRACC.\n\n\nSummary Agent\n\n\nRaw Agent\n\n\nListener Agent", 
+            "text": "Agent Architecture\n\n\nThe agents that coordinate for GRACC\n\n\n\n\nThere are many agents which work together for GRACC.\n\n\nListener Agent\n\n\nThe listener agent responds to requests for summary and raw replications.  It listens on the known port \n/gracc.\ndb\n.requests\n (as defined on \nMessage Queues\n).  \n\n\nSummary Agent\n\n\nRaw Agent", 
             "title": "Agent Architecture"
         }, 
         {
             "location": "/dev-docs/agent-arch/#agent-architecture", 
             "text": "The agents that coordinate for GRACC   There are many agents which work together for GRACC.", 
             "title": "Agent Architecture"
+        }, 
+        {
+            "location": "/dev-docs/agent-arch/#listener-agent", 
+            "text": "The listener agent responds to requests for summary and raw replications.  It listens on the known port  /gracc. db .requests  (as defined on  Message Queues ).", 
+            "title": "Listener Agent"
         }, 
         {
             "location": "/dev-docs/agent-arch/#summary-agent", 
@@ -29,11 +34,6 @@
             "location": "/dev-docs/agent-arch/#raw-agent", 
             "text": "", 
             "title": "Raw Agent"
-        }, 
-        {
-            "location": "/dev-docs/agent-arch/#listener-agent", 
-            "text": "", 
-            "title": "Listener Agent"
         }, 
         {
             "location": "/dev-docs/message-queues/", 

@@ -117,11 +117,11 @@
     
         <li class="main active"><a href="#agent-architecture">Agent Architecture</a></li>
         
+            <li><a href="#listener-agent">Listener Agent</a></li>
+        
             <li><a href="#summary-agent">Summary Agent</a></li>
         
             <li><a href="#raw-agent">Raw Agent</a></li>
-        
-            <li><a href="#listener-agent">Listener Agent</a></li>
         
     
     </ul>
@@ -132,9 +132,10 @@
 <p>The agents that coordinate for GRACC</p>
 <hr />
 <p>There are many agents which work together for GRACC.</p>
+<h2 id="listener-agent">Listener Agent</h2>
+<p>The listener agent responds to requests for summary and raw replications.  It listens on the known port <code>/gracc.&lt;db&gt;.requests</code> (as defined on <a href="../message-queues/">Message Queues</a>).  </p>
 <h2 id="summary-agent">Summary Agent</h2>
-<h2 id="raw-agent">Raw Agent</h2>
-<h2 id="listener-agent">Listener Agent</h2></div>
+<h2 id="raw-agent">Raw Agent</h2></div>
         </div>
 
         <footer class="col-md-12">
