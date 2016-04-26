@@ -4,4 +4,6 @@ copyright: Open Science Grid
 
 pages:
   - 'Introduction': 'index.md'
+  - Development Docs:
+    - Agent Architecture: dev-docs/agent-arch.md
 
