@@ -2,13 +2,38 @@
     "docs": [
         {
             "location": "/", 
-            "text": "GRACC\n\n\nGratia-compatible Collector for Grid Accounting Records\n\n\n\n\nWelcome to the GRACC \n\n\nRepositories of interest:\n\n\n\n\nGRACC Collector\n\n\nGRACC Monitoring Emails", 
+            "text": "GRACC\n\n\nGratia-Compatible Collector for Grid Accounting Records\n\n\n\n\nWelcome to the GRACC \n\n\nRepositories of interest:\n\n\n\n\nGRACC Collector\n\n\nGRACC Monitoring Emails", 
             "title": "Introduction"
         }, 
         {
             "location": "/#gracc", 
-            "text": "Gratia-compatible Collector for Grid Accounting Records   Welcome to the GRACC   Repositories of interest:   GRACC Collector  GRACC Monitoring Emails", 
+            "text": "Gratia-Compatible Collector for Grid Accounting Records   Welcome to the GRACC   Repositories of interest:   GRACC Collector  GRACC Monitoring Emails", 
             "title": "GRACC"
+        }, 
+        {
+            "location": "/dev-docs/agent-arch/", 
+            "text": "Agent Architecture\n\n\nThe agents that coordinate for GRACC\n\n\n\n\nThere are many agents which work together for GRACC.\n\n\nSummary Agent\n\n\nRaw Agent\n\n\nListener Agent", 
+            "title": "Agent Architecture"
+        }, 
+        {
+            "location": "/dev-docs/agent-arch/#agent-architecture", 
+            "text": "The agents that coordinate for GRACC   There are many agents which work together for GRACC.", 
+            "title": "Agent Architecture"
+        }, 
+        {
+            "location": "/dev-docs/agent-arch/#summary-agent", 
+            "text": "", 
+            "title": "Summary Agent"
+        }, 
+        {
+            "location": "/dev-docs/agent-arch/#raw-agent", 
+            "text": "", 
+            "title": "Raw Agent"
+        }, 
+        {
+            "location": "/dev-docs/agent-arch/#listener-agent", 
+            "text": "", 
+            "title": "Listener Agent"
         }
     ]
 }
