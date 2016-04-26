@@ -12,9 +12,9 @@
 	<title>GRACC Documentation</title>
 
         <link href="./css/bootstrap-custom.min.css" rel="stylesheet">
-        <link href="./css/font-awesome-4.5.0.css" rel="stylesheet">
-        <link href="./css/base.css" rel="stylesheet">
+        <link href="./css/font-awesome-4.0.3.css" rel="stylesheet">
         <link rel="stylesheet" href="./css/highlight.css">
+        <link href="./css/base.css" rel="stylesheet">
         <link href="./css/extra.css" rel="stylesheet">
 
         <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -26,14 +26,13 @@
         
     </head>
 
-    <body class="homepage">
+    <body>
 
         <div class="navbar navbar-default navbar-fixed-top" role="navigation">
     <div class="container">
 
         <!-- Collapsed navigation -->
         <div class="navbar-header">
-            
             <!-- Expander button -->
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                 <span class="sr-only">Toggle navigation</span>
@@ -41,7 +40,6 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            
 
             <!-- Main title -->
             <a class="navbar-brand" href=".">GRACC Documentation</a>
@@ -49,67 +47,64 @@
 
         <!-- Expanded navigation -->
         <div class="navbar-collapse collapse">
+            <!-- Main navigation -->
+            <ul class="nav navbar-nav">
             
-                <!-- Main navigation -->
-                <ul class="nav navbar-nav">
-                
-                
-                    <li class="active">
-                        <a href=".">Introduction</a>
-                    </li>
-                
-                
-                
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Development Docs <b class="caret"></b></a>
-                        <ul class="dropdown-menu">
+            
+                <li class="active">
+                    <a href=".">Introduction</a>
+                </li>
+            
+            
+            
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Development Docs <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                    
                         
-                            
 <li >
     <a href="dev-docs/agent-arch/">Agent Architecture</a>
 </li>
 
+                    
                         
-                            
 <li >
     <a href="dev-docs/message-queues/">Message Queues</a>
 </li>
 
-                        
-                        </ul>
-                    </li>
-                
-                
-                </ul>
+                    
+                    </ul>
+                </li>
             
+            
+            </ul>
 
+            <!-- Search, Navigation and Repo links -->
             <ul class="nav navbar-nav navbar-right">
                 <li>
                     <a href="#" data-toggle="modal" data-target="#mkdocs_search_modal">
                         <i class="fa fa-search"></i> Search
                     </a>
                 </li>
+                <li class="disabled">
+                    <a rel="next" >
+                        <i class="fa fa-arrow-left"></i> Previous
+                    </a>
+                </li>
+                <li >
+                    <a rel="prev" href="dev-docs/agent-arch/">
+                        Next <i class="fa fa-arrow-right"></i>
+                    </a>
+                </li>
                 
-                    <li class="disabled">
-                        <a rel="next" >
-                            <i class="fa fa-arrow-left"></i> Previous
-                        </a>
-                    </li>
-                    <li >
-                        <a rel="prev" href="dev-docs/agent-arch/">
-                            Next <i class="fa fa-arrow-right"></i>
-                        </a>
-                    </li>
-                
-                
-                    <li>
-                        <a href="https://github.com/opensciencegrid/gracc">
-                            
-                                <i class="fa fa-github"></i>
-                            
-                            GitHub
-                        </a>
-                    </li>
+                <li>
+                    <a href="https://github.com/opensciencegrid/gracc">
+                        
+                            <i class="fa fa-github"></i>
+                        
+                        GitHub
+                    </a>
+                </li>
                 
             </ul>
         </div>
@@ -117,8 +112,7 @@
 </div>
 
         <div class="container">
-            
-                <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
+            <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
     <ul class="nav bs-sidenav">
     
         <li class="main active"><a href="#gracc">GRACC</a></li>
@@ -126,7 +120,7 @@
     
     </ul>
 </div></div>
-                <div class="col-md-9" role="main">
+            <div class="col-md-9" role="main">
 
 <h1 id="gracc">GRACC</h1>
 <p>Gratia-Compatible Collector for Grid Accounting Records</p>
@@ -137,15 +131,14 @@
 <li><a href="https://github.com/opensciencegrid/gracc-collector">GRACC Collector</a></li>
 <li><a href="https://github.com/opensciencegrid/gracc-email">GRACC Monitoring Emails</a></li>
 </ul></div>
-            
         </div>
 
         <footer class="col-md-12">
             <hr>
             
-                <p>Open Science Grid</p>
+                <center>Open Science Grid</center>
             
-            <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a>.</p>
+            <center>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a>.</center>
         </footer>
 
         <script src="./js/jquery-1.10.2.min.js"></script>
@@ -179,11 +172,5 @@
                 </div>
             </div>
         </div>
-
     </body>
 </html>
-
-<!--
-MkDocs version : 0.15.3
-Build Date UTC : 2016-04-26 20:07:50.960322
--->
