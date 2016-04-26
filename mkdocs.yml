@@ -6,6 +6,7 @@ pages:
   - 'Introduction': 'index.md'
   - Development Docs:
     - Agent Architecture: dev-docs/agent-arch.md
+    - Message Queues: dev-docs/message-queues.md
 
 extra_css: 
   - css/extra.css
