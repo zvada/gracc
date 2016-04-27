@@ -40,6 +40,7 @@ Replay Requests
 The replay request indicates that a remote listener agent attached to an ElasticSearch database should load and re-send some amount of data.
 
 *Keys*:
+
 * `time_range`: A Lucene-formatted time range containing the data that should be resent.
 * `kind`: What type of records should be resent (valid values are curently `raw` or `summary`).
 * `destination`: A queue on the same broker where records should be sent.  Should be a string value.

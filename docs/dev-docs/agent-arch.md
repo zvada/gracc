@@ -18,6 +18,7 @@ The three major centralized components of GRACC include:
 Other pieces of the accounting infrastructure include the site probes (which produce the records) and planned web views of the accounting data (likely based on Grafana or Kibana).
 
 We also plan on developing `gracc-replay`, a command-line tool for initializing replay of data in the system.  This is meant to:
+
 * Upload Gratia raw record tarballs from disk to the message queue.
 * Request raw data to be resent from a given `GRACE` instance to a message queue destination (likely a second `GRACE` instance).
 * Request summary data to be recalculated from a given `GRACE` instance to a message queue destination.
@@ -34,8 +35,10 @@ It listens on the known queue `/gracc.<db>.requests` (as defined on [Message Que
 ## Summary Agent
 
 This agent has two responsibilities:
+
 * Listening to a message queue (`/grace.<db>.summary`) for summary records.  It fetchs the records from the queue and uploads them into ElasticSearch.
 * Periodically request new summaries be made by the Listener agent.  We envision:
+
   * Every 15 minutes, we re-summarize the past 2 days of data.
   * Every 12 hours, we re-summarize the past 30 days of data.
 
@@ -49,6 +52,7 @@ Future components
 -----------------
 
 Components that will likely be needed in the future include:
+
 * `GRACE-B`: Listens for raw records and serializes them to disk; on a daily basis, compact them into a tarball and upload them to archival storage.
 * `GRACE-D`: A _dead letter queue_: a destination for any unparseable or otherwise-rejected records.
 * Some destination for status information.  Every 15 minutes, each component should generate a short status update (analogous to a HTCondor daemon's ClassAd in a `condor_collector`) and serialize it to a database.
