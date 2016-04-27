@@ -171,13 +171,13 @@
 <li>Listening to a message queue (<code>/grace.&lt;db&gt;.summary</code>) for summary records.  It fetchs the records from the queue and uploads them into ElasticSearch.</li>
 <li>
 <p>Periodically request new summaries be made by the Listener agent.  We envision:</p>
-</li>
-<li>
-<p>Every 15 minutes, we re-summarize the past 2 days of data.</p>
-</li>
+<ul>
+<li>Every 15 minutes, we re-summarize the past 2 days of data.</li>
 <li>Every 12 hours, we re-summarize the past 30 days of data.</li>
 </ul>
 <p>This allows late raw records to be included in the summary information.</p>
+</li>
+</ul>
 <h2 id="raw-agent">Raw Agent</h2>
 <p>An agent which listens to one or more message queues (typically, its own queue for replay information and one or more collector queues) for raw records.  Records are read off the queue and uploaded to the database.</p>
 <h2 id="future-components">Future components</h2>
