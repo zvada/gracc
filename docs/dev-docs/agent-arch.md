@@ -36,13 +36,13 @@ It listens on the known queue `/gracc.<db>.requests` (as defined on [Message Que
 
 This agent has two responsibilities:
 
-* Listening to a message queue (`/grace.<db>.summary`) for summary records.  It fetchs the records from the queue and uploads them into ElasticSearch.
-* Periodically request new summaries be made by the Listener agent.  We envision:
+   * Listening to a message queue (`/grace.<db>.summary`) for summary records.  It fetchs the records from the queue and uploads them into ElasticSearch.
+   * Periodically request new summaries be made by the Listener agent.  We envision:
 
-  * Every 15 minutes, we re-summarize the past 2 days of data.
-  * Every 12 hours, we re-summarize the past 30 days of data.
+      * Every 15 minutes, we re-summarize the past 2 days of data.
+      * Every 12 hours, we re-summarize the past 30 days of data.
 
-  This allows late raw records to be included in the summary information.
+      This allows late raw records to be included in the summary information.
 
 ## Raw Agent
 
