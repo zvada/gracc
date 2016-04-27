@@ -22,17 +22,13 @@
   <link href="./css/extra.css" rel="stylesheet">
 
   
-  <script>
-    // Current page data
-    var mkdocs_page_name = "None";
-    var mkdocs_page_input_path = "index.md";
-    var mkdocs_page_url = "/";
-  </script>
-  
   <script src="./js/jquery-2.1.1.min.js"></script>
   <script src="./js/modernizr-2.8.3.min.js"></script>
   <script type="text/javascript" src="./js/highlight.pack.js"></script>
-  <script src="./js/theme.js"></script> 
+  <script src="./js/theme.js"></script>
+  <script>var base_url = '.';</script>
+  <script data-main="./mkdocs/js/search.js" src="./mkdocs/js/require.js"></script>
+
 
   
 </head>
@@ -56,17 +52,8 @@
         <ul class="current">
           
             <li>
-    <li class="toctree-l1 current">
-        <a class="current" href=".">Introduction</a>
-        
-            <ul>
-            
-                <li class="toctree-l3"><a href="#gracc">GRACC</a></li>
-                
-                    <li><a class="toctree-l4" href="#why-gracc">Why GRACC?</a></li>
-                
-            
-            </ul>
+    <li class="toctree-l1 ">
+        <a class="" href=".">Introduction</a>
         
     </li>
 <li>
@@ -113,9 +100,7 @@
   <ul class="wy-breadcrumbs">
     <li><a href=".">Docs</a> &raquo;</li>
     
-      
     
-    <li>Introduction</li>
     <li class="wy-breadcrumbs-aside">
       
         
@@ -129,29 +114,22 @@
           <div role="main">
             <div class="section">
               
-                <h1 id="gracc">GRACC</h1>
-<p>GRid ACcounting Collector</p>
-<p>(pronounced "grok")</p>
-<hr />
-<p>GRACC is a collection of components for implementing resource usage accounting.</p>
-<h3 id="why-gracc">Why GRACC?</h3>
-<p>GRACC is meant as a replacement of the Gratia accounting system; the engineering focus is on smaller, independent components rather than a monolithic collector architecture.  The hope is that, by breaking the functionality into a series of smaller components, future architectural changes (such as migration to a new database) can be done without rewriting the entire infrastructure.  For example, forwarding information to a separate accounting database becomes much simpler in this infrastructure.</p>
-<p>Repositories of interest:</p>
-<ul>
-<li><a href="https://github.com/opensciencegrid/gracc-collector">GRACC Collector</a>.  An agent which runs on an existing Gratia collector that forwards raw usage records to GRACC.</li>
-<li><a href="https://github.com/opensciencegrid/gracc-email">GRACC Monitoring Emails</a>.  Simple daily emails overview GRACC activity.</li>
-</ul>
-              
+
+  <h1 id="search">Search Results</h1>
+
+  <form id="content_search" action="search.html">
+    <span role="status" aria-live="polite" class="ui-helper-hidden-accessible"></span>
+    <input name="q" id="mkdocs-search-query" type="text" class="search_input search-query ui-autocomplete-input" placeholder="Search the Docs" autocomplete="off" autofocus>
+  </form>
+
+  <div id="mkdocs-search-results">
+    Sorry, page not found.
+  </div>
+
+
             </div>
           </div>
           <footer>
-  
-    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-      
-        <a href="dev-docs/agent-arch/" class="btn btn-neutral float-right" title="Agent Architecture">Next <span class="icon icon-circle-arrow-right"></span></a>
-      
-      
-    </div>
   
 
   <hr/>
@@ -180,15 +158,8 @@
       
       
       
-        <span style="margin-left: 15px"><a href="dev-docs/agent-arch/" style="color: #fcfcfc">Next &raquo;</a></span>
-      
     </span>
 </div>
 
 </body>
 </html>
-
-<!--
-MkDocs version : 0.15.3
-Build Date UTC : 2016-04-27 14:27:15.559282
--->
