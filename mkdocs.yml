@@ -2,7 +2,7 @@ site_name: GRACC Documentation
 repo_url: https://github.com/opensciencegrid/gracc
 copyright: Open Science Grid
 
-theme: cinder
+theme: readthedocs
 
 pages:
   - 'Introduction': 'index.md'

@@ -8,7 +8,6 @@ language: python
 before_script:
 - pip install mkdocs
 - pip install MarkdownHighlight
-- pip install mkdocs-cinder
 script:
 - git config user.name "Automatic Publish"
 - git config user.email "djw8605@gmail.com"
