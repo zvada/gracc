@@ -2,13 +2,18 @@
     "docs": [
         {
             "location": "/", 
-            "text": "GRACC\n\n\nGratia-Compatible Collector for Grid Accounting Records\n\n\n\n\nWelcome to the GRACC \n\n\nRepositories of interest:\n\n\n\n\nGRACC Collector\n\n\nGRACC Monitoring Emails", 
+            "text": "GRACC\n\n\nGRid ACcounting Collector\n\n\n(pronounced \"grok\")\n\n\n\n\nGRACC is a collection of components for implementing resource usage accounting.\n\n\nWhy GRACC?\n\n\nGRACC is meant as a replacement of the Gratia accounting system; the engineering focus is on smaller, independent components rather than a monolithic collector architecture.  The hope is that, by breaking the functionality into a series of smaller components, future architectural changes (such as migration to a new database) can be done without rewriting the entire infrastructure.  For example, forwarding information to a separate accounting database becomes much simpler in this infrastructure.\n\n\nRepositories of interest:\n\n\n\n\nGRACC Collector\n.  An agent which runs on an existing Gratia collector that forwards raw usage records to GRACC.\n\n\nGRACC Monitoring Emails\n.  Simple daily emails overview GRACC activity.", 
             "title": "Introduction"
         }, 
         {
             "location": "/#gracc", 
-            "text": "Gratia-Compatible Collector for Grid Accounting Records   Welcome to the GRACC   Repositories of interest:   GRACC Collector  GRACC Monitoring Emails", 
+            "text": "GRid ACcounting Collector  (pronounced \"grok\")   GRACC is a collection of components for implementing resource usage accounting.", 
             "title": "GRACC"
+        }, 
+        {
+            "location": "/#why-gracc", 
+            "text": "GRACC is meant as a replacement of the Gratia accounting system; the engineering focus is on smaller, independent components rather than a monolithic collector architecture.  The hope is that, by breaking the functionality into a series of smaller components, future architectural changes (such as migration to a new database) can be done without rewriting the entire infrastructure.  For example, forwarding information to a separate accounting database becomes much simpler in this infrastructure.  Repositories of interest:   GRACC Collector .  An agent which runs on an existing Gratia collector that forwards raw usage records to GRACC.  GRACC Monitoring Emails .  Simple daily emails overview GRACC activity.", 
+            "title": "Why GRACC?"
         }, 
         {
             "location": "/dev-docs/agent-arch/", 

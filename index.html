@@ -136,19 +136,25 @@
     
         <li class="first-level active"><a href="#gracc">GRACC</a></li>
         
+            <li class="second-level"><a href="#why-gracc">Why GRACC?</a></li>
+            
+        
     
     </ul>
 </div></div>
         <div class="col-md-9" role="main">
 
 <h1 id="gracc">GRACC</h1>
-<p>Gratia-Compatible Collector for Grid Accounting Records</p>
+<p>GRid ACcounting Collector</p>
+<p>(pronounced "grok")</p>
 <hr />
-<p>Welcome to the GRACC </p>
+<p>GRACC is a collection of components for implementing resource usage accounting.</p>
+<h3 id="why-gracc">Why GRACC?</h3>
+<p>GRACC is meant as a replacement of the Gratia accounting system; the engineering focus is on smaller, independent components rather than a monolithic collector architecture.  The hope is that, by breaking the functionality into a series of smaller components, future architectural changes (such as migration to a new database) can be done without rewriting the entire infrastructure.  For example, forwarding information to a separate accounting database becomes much simpler in this infrastructure.</p>
 <p>Repositories of interest:</p>
 <ul>
-<li><a href="https://github.com/opensciencegrid/gracc-collector">GRACC Collector</a></li>
-<li><a href="https://github.com/opensciencegrid/gracc-email">GRACC Monitoring Emails</a></li>
+<li><a href="https://github.com/opensciencegrid/gracc-collector">GRACC Collector</a>.  An agent which runs on an existing Gratia collector that forwards raw usage records to GRACC.</li>
+<li><a href="https://github.com/opensciencegrid/gracc-email">GRACC Monitoring Emails</a>.  Simple daily emails overview GRACC activity.</li>
 </ul></div>
         
     </div>
@@ -204,5 +210,5 @@
 
 <!--
 MkDocs version : 0.15.3
-Build Date UTC : 2016-04-27 13:54:23.334908
+Build Date UTC : 2016-04-27 14:21:58.923767
 -->
