@@ -178,11 +178,13 @@
 
 <h2 id="replay-requests">Replay Requests</h2>
 <p>The replay request indicates that a remote listener agent attached to an ElasticSearch database should load and re-send some amount of data.</p>
-<p><em>Keys</em>:
-<em> <code>time_range</code>: A Lucene-formatted time range containing the data that should be resent.
-</em> <code>kind</code>: What type of records should be resent (valid values are curently <code>raw</code> or <code>summary</code>).
-<em> <code>destination</code>: A queue on the same broker where records should be sent.  Should be a string value.
-</em> <code>filter</code>: A ElasticSearch-formatted query filter (JSON value).  Only records matching this filter should be sent.</p>
+<p><em>Keys</em>:</p>
+<ul>
+<li><code>time_range</code>: A Lucene-formatted time range containing the data that should be resent.</li>
+<li><code>kind</code>: What type of records should be resent (valid values are curently <code>raw</code> or <code>summary</code>).</li>
+<li><code>destination</code>: A queue on the same broker where records should be sent.  Should be a string value.</li>
+<li><code>filter</code>: A ElasticSearch-formatted query filter (JSON value).  Only records matching this filter should be sent.</li>
+</ul>
 <p>Example</p>
 <pre><code>{
  &quot;time_range&quot;: &quot;now-3d&quot;,
