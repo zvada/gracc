@@ -136,6 +136,15 @@
     
         <li class="first-level active"><a href="#message-queues">Message Queues</a></li>
         
+            <li class="second-level"><a href="#raw-records">Raw Records</a></li>
+            
+        
+            <li class="second-level"><a href="#summary-records">Summary Records</a></li>
+            
+        
+            <li class="second-level"><a href="#replay-requests">Replay Requests</a></li>
+            
+        
     
     </ul>
 </div></div>
@@ -147,10 +156,47 @@
 <p>Well known message queues used:</p>
 <ul>
 <li><code>/gracc.&lt;collector&gt;.raw</code> - Listens to raw records to insert into the collector.  This is the interface that probes would send raw records.</li>
-<li><code>/gracc.&lt;db&gt;.summary</code> - Listens for summary records to insert into a specific <code>&lt;db&gt;</code>.  This is used to replicate summary records from other collectors or db's.</li>
-<li><code>/gracc.&lt;db&gt;.raw</code> - </li>
-<li><code>/gracc.&lt;db&gt;.requests</code> - The <a href="../agent-arch/">Ad Agent</a> listens to this queue for requests for raw and summary replications.</li>
-</ul></div>
+<li><code>/grace.&lt;db&gt;.summary</code> - Listens for summary records to insert into a specific <code>&lt;db&gt;</code>.  This is used to replicate summary records from other collectors or db's.</li>
+<li><code>/grace.&lt;db&gt;.raw</code> - Raw record queue for a database instance.</li>
+<li><code>/grace.&lt;db&gt;.requests</code> - The <a href="../agent-arch/">Ad Agent</a> listens to this queue for requests for raw and summary replications.</li>
+</ul>
+<p>Here, <code>&lt;db&gt;</code> is the instance name of a given database install while <code>&lt;collector&gt;</code> is the instance name of an existing Gratia collector.</p>
+<p>There are currently three defined message schemas in GRACC: raw records, summary records, and replay requests:</p>
+<h2 id="raw-records">Raw Records</h2>
+<p>These are JSON-formatted documents; the key-value pairs are derived from the OGF <em>UsageRecord</em> format.  For ease of compatibility with the prior Gratia system, we include an <code>njobs</code> attribute if a given record represents more than one job.</p>
+<pre><code>TODO: copy JSON document here.
+</code></pre>
+
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>We consider these to be "base" keys: additional ones may be given (for example, if the record is derived from a HTCondor ClassAd).</p>
+</div>
+<h2 id="summary-records">Summary Records</h2>
+<p>The summary record represents a grouping of multiple similar raw records.  In GRACC, we often group jobs run on the same date, by the same user, on the same resource.</p>
+<pre><code>TODO: copy JSON document here
+</code></pre>
+
+<h2 id="replay-requests">Replay Requests</h2>
+<p>The replay request indicates that a remote listener agent attached to an ElasticSearch database should load and re-send some amount of data.</p>
+<p><em>Keys</em>:
+<em> <code>time_range</code>: A Lucene-formatted time range containing the data that should be resent.
+</em> <code>kind</code>: What type of records should be resent (valid values are curently <code>raw</code> or <code>summary</code>).
+<em> <code>destination</code>: A queue on the same broker where records should be sent.  Should be a string value.
+</em> <code>filter</code>: A ElasticSearch-formatted query filter (JSON value).  Only records matching this filter should be sent.</p>
+<p>Example</p>
+<pre><code>{
+ &quot;time_range&quot;: &quot;now-3d&quot;,
+ &quot;kind&quot;: &quot;raw&quot;,
+ &quot;destination&quot;: &quot;/grace.osg.raw&quot;,
+ &quot;filter&quot;: {
+            &quot;query&quot;: {
+             &quot;query_string&quot;: {
+              &quot;query&quot;: &quot;vo=cms&quot;,
+             }
+            }
+           }
+}
+</code></pre></div>
         
     </div>
 

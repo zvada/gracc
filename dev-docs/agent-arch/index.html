@@ -136,6 +136,12 @@
     
         <li class="first-level active"><a href="#agent-architecture">Agent Architecture</a></li>
         
+            <li class="second-level"><a href="#components">Components</a></li>
+            
+        
+            <li class="second-level"><a href="#agents">Agents</a></li>
+            
+        
             <li class="second-level"><a href="#listener-agent">Listener Agent</a></li>
             
         
@@ -143,6 +149,9 @@
             
         
             <li class="second-level"><a href="#raw-agent">Raw Agent</a></li>
+            
+        
+            <li class="second-level"><a href="#future-components">Future components</a></li>
             
         
     
@@ -153,11 +162,37 @@
 <h1 id="agent-architecture">Agent Architecture</h1>
 <p>The agents that coordinate for GRACC</p>
 <hr />
-<p>There are many agents which work together for GRACC.</p>
+<p>Unlike its predecessor Gratia, GRACC is split into a number of agents that coordinate through a message queue.  The intent is that this separates the distinct components into separate modules that can evolve at independent rates.  Further, it provides a mechanism for external entities interested in accounting data to integrate into the system.</p>
+<h2 id="components">Components</h2>
+<p>The three major centralized components of GRACC include:</p>
+<ul>
+<li>Message queue: A <a href="https://www.rabbitmq.com/">RabbitMQ</a> service for exchanging messages between system components.  Utilized for its publish-subscribe model and its standardized wire format.</li>
+<li><code>GRACC</code> - a centralized collector endpoint.  This is a HTTP-based service that listens for incoming records from remote probes, buffers them to disk, then sends them to the message queue.</li>
+<li><code>GRACE</code> - an <a href="https://www.elastic.co/">ElasticSearch</a>-based data storage service.  Consists of an ElasticSearch database instance and several agents used to populate the system.</li>
+</ul>
+<p>Other pieces of the accounting infrastructure include the site probes (which produce the records) and planned web views of the accounting data (likely based on Grafana or Kibana).</p>
+<p>We also plan on developing <code>gracc-replay</code>, a command-line tool for initializing replay of data in the system.  This is meant to:
+<em> Upload Gratia raw record tarballs from disk to the message queue.
+</em> Request raw data to be resent from a given <code>GRACE</code> instance to a message queue destination (likely a second <code>GRACE</code> instance).
+* Request summary data to be recalculated from a given <code>GRACE</code> instance to a message queue destination.</p>
+<h2 id="agents">Agents</h2>
 <h2 id="listener-agent">Listener Agent</h2>
-<p>The listener agent responds to requests for summary and raw replications.  It listens on the known port <code>/gracc.&lt;db&gt;.requests</code> (as defined on <a href="../message-queues/">Message Queues</a>).  </p>
+<p>A agent running on <code>GRACE</code>.  The listener agent listens for one-time data replication requests (for either raw or summary data) on the message queue and launches an appropriate sub-process to send the data to the requested destination.</p>
+<p>It listens on the known queue <code>/gracc.&lt;db&gt;.requests</code> (as defined on <a href="../message-queues/">Message Queues</a>).  </p>
 <h2 id="summary-agent">Summary Agent</h2>
-<h2 id="raw-agent">Raw Agent</h2></div>
+<p>This agent has two responsibilities:
+<em> Listening to a message queue (<code>/grace.&lt;db&gt;.summary</code>) for summary records.  It fetchs the records from the queue and uploads them into ElasticSearch.
+</em> Periodically request new summaries be made by the Listener agent.  We envision:
+  * Every 15 minutes, we re-summarize the past 2 days of data.
+  * Every 12 hours, we re-summarize the past 30 days of data.</p>
+<p>This allows late raw records to be included in the summary information.</p>
+<h2 id="raw-agent">Raw Agent</h2>
+<p>An agent which listens to one or more message queues (typically, its own queue for replay information and one or more collector queues) for raw records.  Records are read off the queue and uploaded to the database.</p>
+<h2 id="future-components">Future components</h2>
+<p>Components that will likely be needed in the future include:
+<em> <code>GRACE-B</code>: Listens for raw records and serializes them to disk; on a daily basis, compact them into a tarball and upload them to archival storage.
+</em> <code>GRACE-D</code>: A <em>dead letter queue</em>: a destination for any unparseable or otherwise-rejected records.
+* Some destination for status information.  Every 15 minutes, each component should generate a short status update (analogous to a HTCondor daemon's ClassAd in a <code>condor_collector</code>) and serialize it to a database.</p></div>
         
     </div>
 
