@@ -140,10 +140,12 @@
                 <h1 id="message-queues">Message Queues</h1>
 <p>Message queues used in GRACC</p>
 <hr />
-<p>Well known message queues used:</p>
+<p>In AMQP, there is a difference between a <em>queue</em> and an <em>exchange</em>.  Messages delivered on a <em>queue</em> are read by a single subscriber; messages delivered on an <em>exchange</em> will be delivered to all subscribers (implying they may be buffered for some time at the broker if a given client goes missing).</p>
+<p>We would like collectors to serve multiple databases (hence the use of an <em>exchange</em>) while queues are used for messages sent to a database agent.</p>
+<p>Well known message queues and exchanges used:</p>
 <ul>
-<li><code>/gracc.&lt;collector&gt;.raw</code> - Listens to raw records to insert into the collector.  This is the interface that probes would send raw records.</li>
-<li><code>/grace.&lt;db&gt;.summary</code> - Listens for summary records to insert into a specific <code>&lt;db&gt;</code>.  This is used to replicate summary records from other collectors or db's.</li>
+<li><code>/gracc.&lt;collector&gt;.raw</code> - An exchange which listens to raw records to insert into the collector.  This is the interface that probes would send raw records.</li>
+<li><code>/grace.&lt;db&gt;.summary</code> - A queue that listens for summary records to insert into a specific <code>&lt;db&gt;</code>.  This is used to replicate summary records from other collectors or db's.</li>
 <li><code>/grace.&lt;db&gt;.raw</code> - Raw record queue for a database instance.</li>
 <li><code>/grace.&lt;db&gt;.requests</code> - The <a href="../agent-arch/">Ad Agent</a> listens to this queue for requests for raw and summary replications.</li>
 </ul>
