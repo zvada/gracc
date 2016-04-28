@@ -4,10 +4,14 @@ Message queues used in GRACC
 
 ---
 
-Well known message queues used:
+In AMQP, there is a difference between a _queue_ and an _exchange_.  Messages delivered on a _queue_ are read by a single subscriber; messages delivered on an _exchange_ will be delivered to all subscribers (implying they may be buffered for some time at the broker if a given client goes missing).
 
-* `/gracc.<collector>.raw` - Listens to raw records to insert into the collector.  This is the interface that probes would send raw records.
-* `/grace.<db>.summary` - Listens for summary records to insert into a specific `<db>`.  This is used to replicate summary records from other collectors or db's.
+We would like collectors to serve multiple databases (hence the use of an _exchange_) while queues are used for messages sent to a database agent.
+
+Well known message queues and exchanges used:
+
+* `/gracc.<collector>.raw` - An exchange which listens to raw records to insert into the collector.  This is the interface that probes would send raw records.
+* `/grace.<db>.summary` - A queue that listens for summary records to insert into a specific `<db>`.  This is used to replicate summary records from other collectors or db's.
 * `/grace.<db>.raw` - Raw record queue for a database instance.
 * `/grace.<db>.requests` - The [Ad Agent](agent-arch.md) listens to this queue for requests for raw and summary replications.
 
