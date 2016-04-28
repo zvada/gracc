@@ -14,3 +14,6 @@ script:
 - git remote add gh-token "https://${GH_TOKEN}@${GH_REF}";
 - git fetch gh-token && git fetch gh-token gh-pages:gh-pages;
 - if [ "${TRAVIS_PULL_REQUEST}" = "false" ]; then PYTHONPATH=src/ mkdocs gh-deploy -v --clean --remote-name gh-token; fi;
+notifications:
+  slack:
+    secure: VtUgQYI2ztgMuHLG1wnKIcwGS9VrodHRgA6vSyhQPRDqmrcAipBFOPpqWkz80CKh1W8Wda1KC1DdCa9de9LDVKYz4AhOjbmK/VlsJhWLVJfC0Xa3hWqN5SEqP00B0/5HEHooxHOi5ijGBf6RlkqSgw3wmWhvkqjV35POgGyGITHjVkoU6ORXJV+OtqiB5xtbW4WmEtvf8Art8GhCCXhvCw2xoeuAQQPRZHIt2wDxZUAwgU8Yp9DPphH3J4ahAQIZR8M1npn8JSd9TyGyNbVbY/By/fIvnqRkUcXqfE2m4lvWhmWYOmNAhCD/qMZ20rVy4a5/mpmN0Mm9WHl9Pzb10dbGtPn+J1iqNdB7AnWAcZ+crTHT1YzNyXMB8upG9pID8Sks8sH6LNlSVv/9tQM0N0Y8hJd3aSuRtLSJ4sKi/4eab1KBTCGUIHtJhGvpOYQcatf7P+pP0/JLCRF3TgdZrKMYyXJPqxmNqE/ByEe2r59OpY1PiUxMI/PQZfrmE0yKSpIYuIiy7+tdxO2I9yLNIU2yJP+ggjEVPEZIDHD6/VpWfP2DztsobGBHkhicGqJFujgh0GyebjSYUT+ywtRjpUjazdqhAJAlnUbR2jokVtEVldeNPkeTXd425OWYPH7AiwHhN1HuAtk1noz0MzfagBU0X3m8mqEgAWDoe7rMgG8=
