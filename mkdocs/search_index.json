@@ -79,6 +79,41 @@
             "location": "/dev-docs/message-queues/#replay-requests", 
             "text": "The replay request indicates that a remote listener agent attached to an ElasticSearch database should load and re-send some amount of data.  Keys :   time_range : A Lucene-formatted time range containing the data that should be resent.  kind : What type of records should be resent (valid values are curently  raw  or  summary ).  destination : A queue on the same broker where records should be sent.  Should be a string value.  filter : A ElasticSearch-formatted query filter (JSON value).  Only records matching this filter should be sent.   Example  {\n  time_range :  now-3d ,\n  kind :  raw ,\n  destination :  /grace.osg.raw ,\n  filter : {\n             query : {\n              query_string : {\n               query :  vo=cms ,\n             }\n            }\n           }\n}", 
             "title": "Replay Requests"
+        }, 
+        {
+            "location": "/dev-docs/install-grace-db/", 
+            "text": "Installing GRACE\n\n\nThe GRACE database service consists of:\n\n\n\n\nElasticSearch as a datastore.\n\n\ngrace-raw-listener\n: Listens to the raw records from the collector\n\n\ngrace-summary-listener\n: Listens for and requests summary records.\n\n\ngrace-request-listener\n: Listens for replay and summarization requests.\n\n\n\n\nSee the \nagent architecture docs\n for more information.\n\n\nAdditionally, for monitoring and visualization, one commonly installs\nthe following external components.\n\n\n\n\nInfluxDB (primarily for monitoring ES performance)\n\n\nGrafana (visualization)\n\n\nKibana (visualization)\n\n\n\n\nDependencies\n\n\nThis document assumes a RHEL7 host with ElasticSearch pre-installed and functioning.\n\n\nWe also assume that the OSG repos and \nyum\n priorities have been \nappropriately configured\n.\n\n\nInstallation\n\n\nThe relevant components can be pulled in via a meta-RPM:\n\n\nyum install --enablerepo=osg-development osg-grace\n\n\n\n\nConfiguration\n\n\nConfiguration files are kept in \n/etc/gracc/config.d\n and \n/usr/share/gracc/config.d\n; files in this directory are read in lexigraphical order.  The file format is \nTOML\n.\n\n\nYou will likely need to override at least the AMQP connection paramaters (username and password).  Do not edit the default file in \n/usr/share/gracc/config.d\n: these will be overwritten on upgrade.  Instead, start by editing the samples in \n/etc\n.\n\n\nMost strings will expand the text %I to the \"instance name\".  So, for the \nosg\n instance, the following,\n\n\n[AMQP]\nexchange = \ngracc.%I.raw\n\nqueue = \ngrace.%I.raw\n\n\n\n\n\nis equivalent to\n\n\n[AMQP]\nexchange = \ngracc.osg.raw\n\nqueue = \ngrace.osg.raw\n\n\n\n\n\nFurther, we can have specific instance overrides.  Hence,\n\n\n[AMQP]\nexchange = \ngracc.%I.raw\n\nqueue = \ngrace.%I.raw\n\n\n[AMQP.osg]\nexchange = \ngracc.osg-test.raw\n\n\n\n\n\nis equivalent to:\n\n\n[AMQP]\nexchange = \ngracc.osg-test.raw\n\nqueue = \ngracc.osg.raw\n\n\n\n\n\nRunning services\n\n\nTo configure GRACC to start at boot, you will need to do the following for the \nosg\n instance:\n\n\nln -sf /usr/lib/systemd/system/grace-raw-listener@.service /etc/systemd/system/multi-user.target.wants/grace-raw-listener@osg.service\nln -sf /usr/lib/systemd/system/grace-summary-listener@.service /etc/systemd/system/multi-user.target.wants/grace-summary-listener@osg.service\nln -sf /usr/lib/systemd/system/grace-request-listener@.service /etc/systemd/system/multi-user.target.wants/grace-request-listener@osg.service\nsystemctl daemon-reload\n\n\n\n\nMultiple instance can be run by editing the instance name above.\n\n\nFinally, these services can be started via the typical system management commands:\n\n\nsystemctl start grace-raw-listener@osg\nsystemctl start grace-summary-listener@osg\nsystemctl start grace-request-listener@osg\n\n\n\n\nLog files\n\n\nBy default, log files go into \n/var/log/gracc\n.", 
+            "title": "GRACE Installation"
+        }, 
+        {
+            "location": "/dev-docs/install-grace-db/#installing-grace", 
+            "text": "The GRACE database service consists of:   ElasticSearch as a datastore.  grace-raw-listener : Listens to the raw records from the collector  grace-summary-listener : Listens for and requests summary records.  grace-request-listener : Listens for replay and summarization requests.   See the  agent architecture docs  for more information.  Additionally, for monitoring and visualization, one commonly installs\nthe following external components.   InfluxDB (primarily for monitoring ES performance)  Grafana (visualization)  Kibana (visualization)", 
+            "title": "Installing GRACE"
+        }, 
+        {
+            "location": "/dev-docs/install-grace-db/#dependencies", 
+            "text": "This document assumes a RHEL7 host with ElasticSearch pre-installed and functioning.  We also assume that the OSG repos and  yum  priorities have been  appropriately configured .", 
+            "title": "Dependencies"
+        }, 
+        {
+            "location": "/dev-docs/install-grace-db/#installation", 
+            "text": "The relevant components can be pulled in via a meta-RPM:  yum install --enablerepo=osg-development osg-grace", 
+            "title": "Installation"
+        }, 
+        {
+            "location": "/dev-docs/install-grace-db/#configuration", 
+            "text": "Configuration files are kept in  /etc/gracc/config.d  and  /usr/share/gracc/config.d ; files in this directory are read in lexigraphical order.  The file format is  TOML .  You will likely need to override at least the AMQP connection paramaters (username and password).  Do not edit the default file in  /usr/share/gracc/config.d : these will be overwritten on upgrade.  Instead, start by editing the samples in  /etc .  Most strings will expand the text %I to the \"instance name\".  So, for the  osg  instance, the following,  [AMQP]\nexchange =  gracc.%I.raw \nqueue =  grace.%I.raw   is equivalent to  [AMQP]\nexchange =  gracc.osg.raw \nqueue =  grace.osg.raw   Further, we can have specific instance overrides.  Hence,  [AMQP]\nexchange =  gracc.%I.raw \nqueue =  grace.%I.raw \n\n[AMQP.osg]\nexchange =  gracc.osg-test.raw   is equivalent to:  [AMQP]\nexchange =  gracc.osg-test.raw \nqueue =  gracc.osg.raw", 
+            "title": "Configuration"
+        }, 
+        {
+            "location": "/dev-docs/install-grace-db/#running-services", 
+            "text": "To configure GRACC to start at boot, you will need to do the following for the  osg  instance:  ln -sf /usr/lib/systemd/system/grace-raw-listener@.service /etc/systemd/system/multi-user.target.wants/grace-raw-listener@osg.service\nln -sf /usr/lib/systemd/system/grace-summary-listener@.service /etc/systemd/system/multi-user.target.wants/grace-summary-listener@osg.service\nln -sf /usr/lib/systemd/system/grace-request-listener@.service /etc/systemd/system/multi-user.target.wants/grace-request-listener@osg.service\nsystemctl daemon-reload  Multiple instance can be run by editing the instance name above.  Finally, these services can be started via the typical system management commands:  systemctl start grace-raw-listener@osg\nsystemctl start grace-summary-listener@osg\nsystemctl start grace-request-listener@osg", 
+            "title": "Running services"
+        }, 
+        {
+            "location": "/dev-docs/install-grace-db/#log-files", 
+            "text": "By default, log files go into  /var/log/gracc .", 
+            "title": "Log files"
         }
     ]
 }

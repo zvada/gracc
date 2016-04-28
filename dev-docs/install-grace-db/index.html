@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  
+  <title>GRACE Installation - GRACC Documentation</title>
+  
+
+  <link rel="shortcut icon" href="../../img/favicon.ico">
+
+  
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/highlight.css">
+  <link href="../../css/extra.css" rel="stylesheet">
+
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "GRACE Installation";
+    var mkdocs_page_input_path = "dev-docs/install-grace-db.md";
+    var mkdocs_page_url = "/dev-docs/install-grace-db/";
+  </script>
+  
+  <script src="../../js/jquery-2.1.1.min.js"></script>
+  <script src="../../js/modernizr-2.8.3.min.js"></script>
+  <script type="text/javascript" src="../../js/highlight.pack.js"></script>
+  <script src="../../js/theme.js"></script> 
+
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href="../.." class="icon icon-home"> GRACC Documentation</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        <ul class="current">
+          
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="../..">Introduction</a>
+        
+    </li>
+<li>
+          
+            <li>
+    <ul class="subnav">
+    <li><span>Development Docs</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../agent-arch/">Agent Architecture</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../message-queues/">Message Queues</a>
+        
+    </li>
+
+        
+    </ul>
+<li>
+          
+            <li>
+    <ul class="subnav">
+    <li><span>Operator Docs</span></li>
+
+        
+            
+    <li class="toctree-l1 current">
+        <a class="current" href="./">GRACE Installation</a>
+        
+            <ul>
+            
+                <li class="toctree-l3"><a href="#installing-grace">Installing GRACE</a></li>
+                
+                    <li><a class="toctree-l4" href="#dependencies">Dependencies</a></li>
+                
+                    <li><a class="toctree-l4" href="#installation">Installation</a></li>
+                
+                    <li><a class="toctree-l4" href="#configuration">Configuration</a></li>
+                
+            
+            </ul>
+        
+    </li>
+
+        
+    </ul>
+<li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../..">GRACC Documentation</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>Operator Docs &raquo;</li>
+        
+      
+    
+    <li>GRACE Installation</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        
+          <a href="https://github.com/opensciencegrid/gracc" class="icon icon-github"> Edit on GitHub</a>
+        
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="installing-grace">Installing GRACE</h1>
+<p>The GRACE database service consists of:</p>
+<ul>
+<li>ElasticSearch as a datastore.</li>
+<li><code>grace-raw-listener</code>: Listens to the raw records from the collector</li>
+<li><code>grace-summary-listener</code>: Listens for and requests summary records.</li>
+<li><code>grace-request-listener</code>: Listens for replay and summarization requests.</li>
+</ul>
+<p>See the <a href="../agent-arch/">agent architecture docs</a> for more information.</p>
+<p>Additionally, for monitoring and visualization, one commonly installs
+the following external components.</p>
+<ul>
+<li>InfluxDB (primarily for monitoring ES performance)</li>
+<li>Grafana (visualization)</li>
+<li>Kibana (visualization)</li>
+</ul>
+<h2 id="dependencies">Dependencies</h2>
+<p>This document assumes a RHEL7 host with ElasticSearch pre-installed and functioning.</p>
+<p>We also assume that the OSG repos and <code>yum</code> priorities have been <a href="http://opensciencegrid.github.io/docs/Common/yum/">appropriately configured</a>.</p>
+<h2 id="installation">Installation</h2>
+<p>The relevant components can be pulled in via a meta-RPM:</p>
+<pre><code>yum install --enablerepo=osg-development osg-grace
+</code></pre>
+
+<h2 id="configuration">Configuration</h2>
+<p>Configuration files are kept in <code>/etc/gracc/config.d</code> and <code>/usr/share/gracc/config.d</code>; files in this directory are read in lexigraphical order.  The file format is <a href="https://github.com/toml-lang/toml">TOML</a>.</p>
+<p>You will likely need to override at least the AMQP connection paramaters (username and password).  Do not edit the default file in <code>/usr/share/gracc/config.d</code>: these will be overwritten on upgrade.  Instead, start by editing the samples in <code>/etc</code>.</p>
+<p>Most strings will expand the text %I to the "instance name".  So, for the <code>osg</code> instance, the following,</p>
+<pre><code>[AMQP]
+exchange = &quot;gracc.%I.raw&quot;
+queue = &quot;grace.%I.raw&quot;
+</code></pre>
+
+<p>is equivalent to</p>
+<pre><code>[AMQP]
+exchange = &quot;gracc.osg.raw&quot;
+queue = &quot;grace.osg.raw&quot;
+</code></pre>
+
+<p>Further, we can have specific instance overrides.  Hence,</p>
+<pre><code>[AMQP]
+exchange = &quot;gracc.%I.raw&quot;
+queue = &quot;grace.%I.raw&quot;
+
+[AMQP.osg]
+exchange = &quot;gracc.osg-test.raw&quot;
+</code></pre>
+
+<p>is equivalent to:</p>
+<pre><code>[AMQP]
+exchange = &quot;gracc.osg-test.raw&quot;
+queue = &quot;gracc.osg.raw&quot;
+</code></pre>
+
+<h3 id="running-services">Running services</h3>
+<p>To configure GRACC to start at boot, you will need to do the following for the <code>osg</code> instance:</p>
+<pre><code>ln -sf /usr/lib/systemd/system/grace-raw-listener@.service /etc/systemd/system/multi-user.target.wants/grace-raw-listener@osg.service
+ln -sf /usr/lib/systemd/system/grace-summary-listener@.service /etc/systemd/system/multi-user.target.wants/grace-summary-listener@osg.service
+ln -sf /usr/lib/systemd/system/grace-request-listener@.service /etc/systemd/system/multi-user.target.wants/grace-request-listener@osg.service
+systemctl daemon-reload
+</code></pre>
+
+<p>Multiple instance can be run by editing the instance name above.</p>
+<p>Finally, these services can be started via the typical system management commands:</p>
+<pre><code>systemctl start grace-raw-listener@osg
+systemctl start grace-summary-listener@osg
+systemctl start grace-request-listener@osg
+</code></pre>
+
+<h3 id="log-files">Log files</h3>
+<p>By default, log files go into <code>/var/log/gracc</code>.</p>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="../message-queues/" class="btn btn-neutral" title="Message Queues"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+      <p>Open Science Grid</p>
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+	  
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+<div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+          <a href="https://github.com/opensciencegrid/gracc" class="icon icon-github" style="float: left; color: #fcfcfc"> GitHub</a>
+      
+      
+        <span><a href="../message-queues/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+    </span>
+</div>
+
+</body>
+</html>
