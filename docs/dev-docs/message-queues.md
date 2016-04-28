@@ -53,16 +53,16 @@ The replay request indicates that a remote listener agent attached to an Elastic
 Example
 ```
 {
- "time_range": "now-3d",
- "kind": "raw",
- "destination": "/grace.osg.raw",
- "filter": {
-            "query": {
-             "query_string": {
-              "query": "vo=cms",
-             }
-            }
-           }
+  "time_range": "now-3d",
+  "kind": "raw",
+  "destination": "/grace.osg.raw",
+  "filter": {
+    "query": {
+      "query_string": {
+        "query": "vo=cms"
+      }
+    }
+  }
 }
 ```
 
