@@ -9,6 +9,8 @@ pages:
   - Development Docs:
     - Agent Architecture: dev-docs/agent-arch.md
     - Message Queues: dev-docs/message-queues.md
+  - Operator Docs
+    - GRACE Installation: dev-docs/install-grace-db.md
 
 extra_css: 
   - css/extra.css
