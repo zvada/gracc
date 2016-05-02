@@ -166,7 +166,7 @@
 <p>The three major centralized components of GRACC include:</p>
 <ul>
 <li>Message queue: A <a href="https://www.rabbitmq.com/">RabbitMQ</a> service for exchanging messages between system components.  Utilized for its publish-subscribe model and its standardized wire format.</li>
-<li><code>GRACC</code> - a centralized collector endpoint.  This is a HTTP-based service that listens for incoming records from remote probes, buffers them to disk, then sends them to the message queue.</li>
+<li><code>GRACC</code> - a centralized collector endpoint.  This is a HTTP-based service that listens for incoming records from legacy probes or  Gratia collectors and sends them to the message queue.</li>
 <li><code>GRACE</code> - an <a href="https://www.elastic.co/">ElasticSearch</a>-based data storage service.  Consists of an ElasticSearch database instance and several agents used to populate the system.</li>
 </ul>
 <p>Other pieces of the accounting infrastructure include the site probes (which produce the records) and planned web views of the accounting data (likely based on Grafana or Kibana).</p>
