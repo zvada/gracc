@@ -16,4 +16,5 @@ Repositories of interest:
 
 * [GRACC Collector](https://github.com/opensciencegrid/gracc-collector).  An agent which runs on an existing Gratia collector that forwards raw usage records to GRACC.
 * [GRACC Monitoring Emails](https://github.com/opensciencegrid/gracc-email).  Simple daily emails overview GRACC activity.
+* [GRACC Request Daemon](https://github.com/opensciencegrid/gracc-request). Agents that listen for replay requests from GRACC.
 
