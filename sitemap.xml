@@ -4,7 +4,7 @@
     
     <url>
      <loc>None/</loc>
-     <lastmod>2016-05-02</lastmod>
+     <lastmod>2016-05-04</lastmod>
      <changefreq>daily</changefreq>
     </url>
     
@@ -13,13 +13,13 @@
         
     <url>
      <loc>None/dev-docs/agent-arch/</loc>
-     <lastmod>2016-05-02</lastmod>
+     <lastmod>2016-05-04</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
      <loc>None/dev-docs/message-queues/</loc>
-     <lastmod>2016-05-02</lastmod>
+     <lastmod>2016-05-04</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
@@ -29,7 +29,7 @@
         
     <url>
      <loc>None/dev-docs/install-grace-db/</loc>
-     <lastmod>2016-05-02</lastmod>
+     <lastmod>2016-05-04</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
