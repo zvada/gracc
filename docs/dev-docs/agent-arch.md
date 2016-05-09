@@ -26,11 +26,11 @@ We also plan on developing `gracc-replay`, a command-line tool for initializing 
 Agents
 ------
 
-## Listener Agent
+![GRACC Agent Overview](../images/AgentOverview.png)
 
-A agent running on `GRACE`.  The listener agent listens for one-time data replication requests (for either raw or summary data) on the message queue and launches an appropriate sub-process to send the data to the requested destination.
+## Raw Agent
 
-It listens on the known queue `/gracc.<db>.requests` (as defined on [Message Queues](message-queues.md)).  
+An agent which listens to one or more message queues (typically, its own queue for replay information and one or more collector queues) for raw records.  Records are read off the queue and uploaded to the database.
 
 ## Summary Agent
 
@@ -44,9 +44,15 @@ This agent has two responsibilities:
 
       This allows late raw records to be included in the summary information.
 
-## Raw Agent
+## Listener Agent
 
-An agent which listens to one or more message queues (typically, its own queue for replay information and one or more collector queues) for raw records.  Records are read off the queue and uploaded to the database.
+A agent running on `GRACE`.  The listener agent listens for one-time data replication requests (for either raw or summary data) on the message queue and launches an appropriate sub-process to send the data to the requested destination.
+
+It listens on the known queue `/gracc.<db>.requests` (as defined on [Message Queues](message-queues.md)).  
+
+
+
+
 
 Future components
 -----------------
