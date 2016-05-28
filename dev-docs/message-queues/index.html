@@ -94,6 +94,13 @@
     </li>
 
         
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../raw-records/">Raw Records</a>
+        
+    </li>
+
+        
     </ul>
 <li>
           
@@ -168,7 +175,64 @@
 <p>There are currently three defined message schemas in GRACC: raw records, summary records, and replay requests:</p>
 <h2 id="raw-records">Raw Records</h2>
 <p>These are JSON-formatted documents; the key-value pairs are derived from the OGF <em>UsageRecord</em> format.  For ease of compatibility with the prior Gratia system, we include an <code>njobs</code> attribute if a given record represents more than one job.</p>
-<pre><code>TODO: copy JSON document here.
+<p>The <a href="../raw-records/">Raw Records</a> page has more details and the mapping from XML UsageRecord.</p>
+<pre><code>{
+    &quot;RecordId&quot;: &quot;osg-gw-7.t2.ucsd.edu:35741.2&quot;,
+    &quot;CreateTime&quot;: &quot;2016-05-27T22:46:46Z&quot;,
+    &quot;GlobalJobId&quot;: &quot;condor.osg-gw-7.t2.ucsd.edu#185777.0#1464388242&quot;,
+    &quot;LocalJobId&quot;: &quot;185777&quot;,
+    &quot;LocalUserId&quot;: &quot;cmsuser&quot;,
+    &quot;GlobalUsername&quot;: &quot;cmsuser@t2.ucsd.edu&quot;,
+    &quot;DN&quot;: &quot;/DC=ch/DC=cern/OU=Organic Units/OU=Users/CN=sciaba/CN=430796/CN=Andrea Sciaba&quot;,
+    &quot;VOName&quot;: &quot;/cms/Role=production/Capability=NULL&quot;,
+    &quot;ReportableVOName&quot;: &quot;cms&quot;,
+    &quot;JobName&quot;: &quot;osg-gw-7.t2.ucsd.edu#185777.0#1464388242&quot;,
+    &quot;MachineName&quot;: &quot;osg-gw-7.t2.ucsd.edu&quot;,
+    &quot;SubmitHost&quot;: &quot;osg-gw-7.t2.ucsd.edu&quot;,
+    &quot;Status&quot;: &quot;0&quot;,
+    &quot;Status_description&quot;: &quot;Condor Exit Status&quot;,
+    &quot;WallDuration&quot;: 617,
+    &quot;WallDuration_description&quot;: &quot;Was entered in seconds&quot;
+    &quot;TimeDuration&quot;: {
+        &quot;CommittedSuspensionTime&quot;: 0,
+        &quot;CommittedTime&quot;: 617,
+        &quot;CumulativeSuspensionTime&quot;: 0,
+        &quot;LocalSysCpu&quot;: 0,
+        &quot;LocalUserCpu&quot;: 0,
+        &quot;RemoteSysCpu&quot;: 18,
+        &quot;RemoteUserCpu&quot;: 0
+    },
+    &quot;CpuDuration&quot;: 18,
+    &quot;CpuDuration_system&quot;: 18,
+    &quot;CpuDuration_system_description&quot;: &quot;Was entered in seconds&quot;,
+    &quot;CpuDuration_user&quot;: 0,
+    &quot;CpuDuration_user_description&quot;: &quot;Was entered in seconds&quot;,
+    &quot;EndTime&quot;: &quot;2016-05-27T22:44:08Z&quot;,
+    &quot;StartTime&quot;: &quot;2016-05-27T22:33:51Z&quot;,
+    &quot;Host&quot;: &quot;cabinet-1-1-1.t2.ucsd.edu&quot;,
+    &quot;Queue&quot;: &quot;5&quot;,
+    &quot;Queue_description&quot;: &quot;Condor's JobUniverse field&quot;,
+    &quot;NodeCount&quot;: &quot;1&quot;,
+    &quot;NodeCount_metric&quot;: &quot;max&quot;,
+    &quot;Processors&quot;: &quot;1&quot;,
+    &quot;Processors_metric&quot;: &quot;max&quot;,
+    &quot;Resource&quot;: {
+        &quot;AccountingGroup&quot;: &quot;group_cmsprod.cmsuser&quot;,
+        &quot;CondorMyType&quot;: &quot;Job&quot;,
+        &quot;ExitBySignal&quot;: &quot;false&quot;,
+        &quot;ExitCode&quot;: &quot;0&quot;,
+        &quot;ResourceType&quot;: &quot;Batch&quot;,
+        &quot;condor-JobStatus&quot;: &quot;4&quot;
+    },
+    &quot;Network&quot;: &quot;0&quot;,
+    &quot;Network_metric&quot;: &quot;total&quot;,
+    &quot;Network_phaseUnit&quot;: 617,
+    &quot;Network_storageUnit&quot;: &quot;b&quot;,
+    &quot;ProbeName&quot;: &quot;condor:osg-gw-7.t2.ucsd.edu&quot;,
+    &quot;SiteName&quot;: &quot;UCSDT2-D&quot;,
+    &quot;Grid&quot;: &quot;OSG&quot;,
+    &quot;Njobs&quot;: &quot;1&quot;,
+}
 </code></pre>
 
 <div class="admonition note">
@@ -210,7 +274,7 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../install-grace-db/" class="btn btn-neutral float-right" title="GRACE Installation">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../raw-records/" class="btn btn-neutral float-right" title="Raw Records">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
         <a href="../agent-arch/" class="btn btn-neutral" title="Agent Architecture"><span class="icon icon-circle-arrow-left"></span> Previous</a>
@@ -246,7 +310,7 @@
         <span><a href="../agent-arch/" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
       
-        <span style="margin-left: 15px"><a href="../install-grace-db/" style="color: #fcfcfc">Next &raquo;</a></span>
+        <span style="margin-left: 15px"><a href="../raw-records/" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>

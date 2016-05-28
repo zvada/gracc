@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  
+  <title>Raw Records - GRACC Documentation</title>
+  
+
+  <link rel="shortcut icon" href="../../img/favicon.ico">
+
+  
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/highlight.css">
+  <link href="../../css/extra.css" rel="stylesheet">
+
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Raw Records";
+    var mkdocs_page_input_path = "dev-docs/raw-records.md";
+    var mkdocs_page_url = "/dev-docs/raw-records/";
+  </script>
+  
+  <script src="../../js/jquery-2.1.1.min.js"></script>
+  <script src="../../js/modernizr-2.8.3.min.js"></script>
+  <script type="text/javascript" src="../../js/highlight.pack.js"></script>
+  <script src="../../js/theme.js"></script> 
+
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href="../.." class="icon icon-home"> GRACC Documentation</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        <ul class="current">
+          
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="../..">Introduction</a>
+        
+    </li>
+<li>
+          
+            <li>
+    <ul class="subnav">
+    <li><span>Development Docs</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../agent-arch/">Agent Architecture</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../message-queues/">Message Queues</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 current">
+        <a class="current" href="./">Raw Records</a>
+        
+            <ul>
+            
+                <li class="toctree-l3"><a href="#raw-records">Raw Records</a></li>
+                
+                    <li><a class="toctree-l4" href="#requirements">Requirements</a></li>
+                
+                    <li><a class="toctree-l4" href="#converting-xml-jobusagerecord">Converting XML JobUsageRecord</a></li>
+                
+            
+            </ul>
+        
+    </li>
+
+        
+    </ul>
+<li>
+          
+            <li>
+    <ul class="subnav">
+    <li><span>Operator Docs</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../install-grace-db/">GRACE Installation</a>
+        
+    </li>
+
+        
+    </ul>
+<li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../..">GRACC Documentation</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>Development Docs &raquo;</li>
+        
+      
+    
+    <li>Raw Records</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        
+          <a href="https://github.com/opensciencegrid/gracc" class="icon icon-github"> Edit on GitHub</a>
+        
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="raw-records">Raw Records</h1>
+<p>Raw records are in JSON format with a schema derived from the 
+<a href="https://www.ogf.org/documents/GFD.98.pdf">OGF UsageRecord specification</a> 
+used by GRACC's predecessor Gratia.</p>
+<h2 id="requirements">Requirements</h2>
+<p>To maintain flexibility and fully leverage the schemaless storage being used,
+the schema requirements are kept to a minimum. Some fields are expected by 
+GRACC compenents so leaving them out will result in the records not being
+properly accounted:</p>
+<ul>
+<li>CommonName</li>
+<li>VOName</li>
+<li>ReportableVOName</li>
+<li>ProjectName</li>
+<li>EndTime</li>
+<li>CpuDuration</li>
+<li>WallDuration</li>
+<li>Processors</li>
+<li>...?</li>
+</ul>
+<h3 id="dates-and-times">Dates and Times</h3>
+<p>All times are strings in ISO8601 format. Time durations are floats 
+representing seconds.</p>
+<h2 id="converting-xml-jobusagerecord">Converting XML JobUsageRecord</h2>
+<p>The mapping from an XML JobUsageRecord to a JSON Raw GRACC record is
+outlined below; this should help inform how new records are generated as well.</p>
+<p>The raw XML record is stored in the <code>RawXML</code> field, to allow for later reference 
+and remapping.</p>
+<h3 id="identity-groups">Identity Groups</h3>
+<p>Identity groups are flattened by moving their sub-elements to the top level:</p>
+<ul>
+<li>RecordIdentity<ul>
+<li>RecordId</li>
+<li>CreateTime</li>
+</ul>
+</li>
+<li>JobIdentity<ul>
+<li>GlobalJobId</li>
+<li>LocalJobId</li>
+<li>ProcessId (array)</li>
+</ul>
+</li>
+<li>UserIdentity<ul>
+<li>LocalUserId</li>
+<li>GlobalUsername</li>
+<li>CommonName</li>
+<li>DN</li>
+<li>VOName</li>
+<li>ReportableVOName</li>
+</ul>
+</li>
+</ul>
+<h3 id="durations">Durations</h3>
+<p>Duration fields are converted to seconds.
+CpuDuration can have usage "user" or "system", these are also moved into
+the top level:</p>
+<ul>
+<li>CpuDuration (combined)</li>
+<li>CpuDuration_user</li>
+<li>CpuDuration_system</li>
+<li>WallDuration</li>
+</ul>
+<h3 id="resource">Resource</h3>
+<p>Resources are transformed into a <code>&lt;description&gt;:&lt;value&gt;</code> map in the Resource
+field. The description is transformed to make it a valid field name 
+(spaces and dots are converted to dashes). Other properties are flattened 
+into the Resource map as <code>&lt;description&gt;_&lt;property_name&gt;:&lt;property_value&gt;</code>.</p>
+<p>TimeDuration and TimeInstant elements are likewise put in <code>&lt;type&gt;:&lt;value&gt;</code> maps 
+in their respective fields. Durations are converted to seconds, discrete times 
+are ISO8601 strings.</p>
+<h3 id="other">Other</h3>
+<p>Any other elements are directly included in the top level. Properties of those elements are moved to fields named as <code>&lt;element&gt;_&lt;property&gt;</code>, e.g. <code>JobName_description</code>.</p>
+<h3 id="example-xml-record">Example XML Record</h3>
+<pre><code>&lt;JobUsageRecord xmlns="http://www.gridforum.org/2003/ur-wg" xmlns:urwg="http://www.gridforum.org/2003/ur-wg" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.gridforum.org/2003/ur-wg file:///u:/OSG/urwg-schema.11.xsd"&gt;
+    &lt;RecordIdentity urwg:createTime="2016-05-27T22:46:46Z" urwg:recordId="osg-gw-7.t2.ucsd.edu:35741.2"/&gt;
+    &lt;JobIdentity&gt;
+        &lt;GlobalJobId&gt;condor.osg-gw-7.t2.ucsd.edu#185777.0#1464388242&lt;/GlobalJobId&gt;
+        &lt;LocalJobId&gt;185777&lt;/LocalJobId&gt;
+    &lt;/JobIdentity&gt;
+    &lt;UserIdentity&gt;
+        &lt;LocalUserId&gt;cmsuser&lt;/LocalUserId&gt;
+        &lt;GlobalUsername&gt;cmsuser@t2.ucsd.edu&lt;/GlobalUsername&gt;
+        &lt;DN&gt;/DC=ch/DC=cern/OU=Organic Units/OU=Users/CN=sciaba/CN=430796/CN=Andrea Sciaba&lt;/DN&gt;
+        &lt;VOName&gt;/cms/Role=production/Capability=NULL&lt;/VOName&gt;
+        &lt;ReportableVOName&gt;cms&lt;/ReportableVOName&gt;
+    &lt;/UserIdentity&gt;
+    &lt;JobName&gt;osg-gw-7.t2.ucsd.edu#185777.0#1464388242&lt;/JobName&gt;
+    &lt;MachineName&gt;osg-gw-7.t2.ucsd.edu&lt;/MachineName&gt;
+    &lt;SubmitHost&gt;osg-gw-7.t2.ucsd.edu&lt;/SubmitHost&gt;
+    &lt;Status urwg:description="Condor Exit Status"&gt;0&lt;/Status&gt;
+    &lt;WallDuration urwg:description="Was entered in seconds"&gt;PT10M17.0S&lt;/WallDuration&gt;
+    &lt;TimeDuration urwg:type="RemoteUserCpu"&gt;PT0S&lt;/TimeDuration&gt;
+    &lt;TimeD
+    &lt;TimeDuration urwg:type="RemoteSysCpu"&gt;PT18.0S&lt;/TimeDuration&gt;
+    &lt;TimeDuration urwg:type="LocalSysCpu"&gt;PT0S&lt;/TimeDuration&gt;
+    &lt;TimeDuration urwg:type="CumulativeSuspensionTime"&gt;PT0S&lt;/TimeDuration&gt;
+    &lt;TimeDuration urwg:type="CommittedSuspensionTime"&gt;PT0S&lt;/TimeDuration&gt;
+    &lt;TimeDuration urwg:type="CommittedTime"&gt;PT10M17.0S&lt;/TimeDuration&gt;
+    &lt;CpuDuration urwg:description="Was entered in seconds" urwg:usageType="system"&gt;PT18.0S&lt;/CpuDuration&gt;
+    &lt;CpuDuration urwg:description="Was entered in seconds" urwg:usageType="user"&gt;PT0S&lt;/CpuDuration&gt;
+    &lt;EndTime urwg:description="Was entered in seconds"&gt;2016-05-27T22:44:08Z&lt;/EndTime&gt;
+    &lt;StartTime urwg:description="Was entered in seconds"&gt;2016-05-27T22:33:51Z&lt;/StartTime&gt;
+    &lt;Host primary="true"&gt;cabinet-1-1-1.t2.ucsd.edu&lt;/Host&gt;
+    &lt;Queue urwg:description="Condor's JobUniverse field"&gt;5&lt;/Queue&gt;
+    &lt;NodeCount urwg:metric="max"&gt;1&lt;/NodeCount&gt;
+    &lt;Processors urwg:metric="max"&gt;1&lt;/Processors&gt;
+    &lt;Resource urwg:description="CondorMyType"&gt;Job&lt;/Resource&gt;
+    &lt;Resource urwg:description="AccountingGroup"&gt;group_cmsprod.cmsuser&lt;/Resource&gt;
+    &lt;Resource urwg:description="ExitBySignal"&gt;false&lt;/Resource&gt;
+    &lt;Resource urwg:description="ExitCode"&gt;0&lt;/Resource&gt;
+    &lt;Resource urwg:description="condor.JobStatus"&gt;4&lt;/Resource&gt;
+    &lt;Network urwg:metric="total" urwg:phaseUnit="PT10M17.0S" urwg:storageUnit="b"&gt;0&lt;/Network&gt;
+    &lt;ProbeName&gt;condor:osg-gw-7.t2.ucsd.edu&lt;/ProbeName&gt;
+    &lt;SiteName&gt;UCSDT2-D&lt;/SiteName&gt;
+    &lt;Grid&gt;OSG&lt;/Grid&gt;
+    &lt;Njobs&gt;1&lt;/Njobs&gt;
+    &lt;Resource urwg:description="ResourceType"&gt;Batch&lt;/Resource&gt;
+&lt;/JobUsageRecord&gt;
+</code></pre>
+<h3 id="example-corresponding-json">Example Corresponding JSON</h3>
+<pre><code>{
+    "RecordId": "osg-gw-7.t2.ucsd.edu:35741.2",
+    "CreateTime": "2016-05-27T22:46:46Z",
+    "GlobalJobId": "condor.osg-gw-7.t2.ucsd.edu#185777.0#1464388242",
+    "LocalJobId": "185777",
+    "LocalUserId": "cmsuser",
+    "GlobalUsername": "cmsuser@t2.ucsd.edu",
+    "DN": "/DC=ch/DC=cern/OU=Organic Units/OU=Users/CN=sciaba/CN=430796/CN=Andrea Sciaba",
+    "VOName": "/cms/Role=production/Capability=NULL",
+    "ReportableVOName": "cms",
+    "JobName": "osg-gw-7.t2.ucsd.edu#185777.0#1464388242",
+    "MachineName": "osg-gw-7.t2.ucsd.edu",
+    "SubmitHost": "osg-gw-7.t2.ucsd.edu",
+    "Status": "0",
+    "Status_description": "Condor Exit Status",
+    "WallDuration": 617,
+    "WallDuration_description": "Was entered in seconds"
+    "TimeDuration": {
+        "CommittedSuspensionTime": 0,
+        "CommittedTime": 617,
+        "CumulativeSuspensionTime": 0,
+        "LocalSysCpu": 0,
+        "LocalUserCpu": 0,
+        "RemoteSysCpu": 18,
+        "RemoteUserCpu": 0
+    },
+    "CpuDuration": 18,
+    "CpuDuration_system": 18,
+    "CpuDuration_system_description": "Was entered in seconds",
+    "CpuDuration_user": 0,
+    "CpuDuration_user_description": "Was entered in seconds",
+    "EndTime": "2016-05-27T22:44:08Z",
+    "StartTime": "2016-05-27T22:33:51Z",
+    "Host": "cabinet-1-1-1.t2.ucsd.edu",
+    "Queue": "5",
+    "Queue_description": "Condor's JobUniverse field",
+    "NodeCount": "1",
+    "NodeCount_metric": "max",
+    "Processors": "1",
+    "Processors_metric": "max",
+    "Resource": {
+        "AccountingGroup": "group_cmsprod.cmsuser",
+        "CondorMyType": "Job",
+        "ExitBySignal": "false",
+        "ExitCode": "0",
+        "ResourceType": "Batch",
+        "condor-JobStatus": "4"
+    },
+    "Network": "0",
+    "Network_metric": "total",
+    "Network_phaseUnit": 617,
+    "Network_storageUnit": "b",
+    "ProbeName": "condor:osg-gw-7.t2.ucsd.edu",
+    "SiteName": "UCSDT2-D",
+    "Grid": "OSG",
+    "Njobs": "1",
+}
+</code></pre>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../install-grace-db/" class="btn btn-neutral float-right" title="GRACE Installation">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../message-queues/" class="btn btn-neutral" title="Message Queues"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+      <p>Open Science Grid</p>
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+	  
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+<div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+          <a href="https://github.com/opensciencegrid/gracc" class="icon icon-github" style="float: left; color: #fcfcfc"> GitHub</a>
+      
+      
+        <span><a href="../message-queues/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../install-grace-db/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+
+</body>
+</html>
