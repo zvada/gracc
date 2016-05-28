@@ -9,6 +9,7 @@ pages:
   - Development Docs:
     - Agent Architecture: dev-docs/agent-arch.md
     - Message Queues: dev-docs/message-queues.md
+    - Raw Records: dev-docs/raw-records.md
   - Operator Docs:
     - GRACE Installation: dev-docs/install-grace-db.md
 

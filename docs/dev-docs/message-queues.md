@@ -23,12 +23,72 @@ Raw Records
 -----------
 
 These are JSON-formatted documents; the key-value pairs are derived from the OGF *UsageRecord* format.  For ease of compatibility with the prior Gratia system, we include an `njobs` attribute if a given record represents more than one job.
+
+The [Raw Records](raw-records.md) page has more details and the mapping from XML UsageRecord.
+
 ```
-TODO: copy JSON document here.
+{
+    "RecordId": "osg-gw-7.t2.ucsd.edu:35741.2",
+    "CreateTime": "2016-05-27T22:46:46Z",
+    "GlobalJobId": "condor.osg-gw-7.t2.ucsd.edu#185777.0#1464388242",
+    "LocalJobId": "185777",
+    "LocalUserId": "cmsuser",
+    "GlobalUsername": "cmsuser@t2.ucsd.edu",
+    "DN": "/DC=ch/DC=cern/OU=Organic Units/OU=Users/CN=sciaba/CN=430796/CN=Andrea Sciaba",
+    "VOName": "/cms/Role=production/Capability=NULL",
+    "ReportableVOName": "cms",
+    "JobName": "osg-gw-7.t2.ucsd.edu#185777.0#1464388242",
+    "MachineName": "osg-gw-7.t2.ucsd.edu",
+    "SubmitHost": "osg-gw-7.t2.ucsd.edu",
+    "Status": "0",
+    "Status_description": "Condor Exit Status",
+    "WallDuration": 617,
+    "WallDuration_description": "Was entered in seconds"
+    "TimeDuration": {
+        "CommittedSuspensionTime": 0,
+        "CommittedTime": 617,
+        "CumulativeSuspensionTime": 0,
+        "LocalSysCpu": 0,
+        "LocalUserCpu": 0,
+        "RemoteSysCpu": 18,
+        "RemoteUserCpu": 0
+    },
+    "CpuDuration": 18,
+    "CpuDuration_system": 18,
+    "CpuDuration_system_description": "Was entered in seconds",
+    "CpuDuration_user": 0,
+    "CpuDuration_user_description": "Was entered in seconds",
+    "EndTime": "2016-05-27T22:44:08Z",
+    "StartTime": "2016-05-27T22:33:51Z",
+    "Host": "cabinet-1-1-1.t2.ucsd.edu",
+    "Queue": "5",
+    "Queue_description": "Condor's JobUniverse field",
+    "NodeCount": "1",
+    "NodeCount_metric": "max",
+    "Processors": "1",
+    "Processors_metric": "max",
+    "Resource": {
+        "AccountingGroup": "group_cmsprod.cmsuser",
+        "CondorMyType": "Job",
+        "ExitBySignal": "false",
+        "ExitCode": "0",
+        "ResourceType": "Batch",
+        "condor-JobStatus": "4"
+    },
+    "Network": "0",
+    "Network_metric": "total",
+    "Network_phaseUnit": 617,
+    "Network_storageUnit": "b",
+    "ProbeName": "condor:osg-gw-7.t2.ucsd.edu",
+    "SiteName": "UCSDT2-D",
+    "Grid": "OSG",
+    "Njobs": "1",
+}
 ```
 
 !!! note
     We consider these to be "base" keys: additional ones may be given (for example, if the record is derived from a HTCondor ClassAd).
+
 
 Summary Records
 ---------------
