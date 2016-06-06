@@ -79,11 +79,11 @@
                 
                     <li><a class="toctree-l4" href="#agents">Agents</a></li>
                 
-                    <li><a class="toctree-l4" href="#listener-agent">Listener Agent</a></li>
+                    <li><a class="toctree-l4" href="#raw-agent">Raw Agent</a></li>
                 
                     <li><a class="toctree-l4" href="#summary-agent">Summary Agent</a></li>
                 
-                    <li><a class="toctree-l4" href="#raw-agent">Raw Agent</a></li>
+                    <li><a class="toctree-l4" href="#listener-agent">Listener Agent</a></li>
                 
                     <li><a class="toctree-l4" href="#future-components">Future components</a></li>
                 
@@ -184,9 +184,9 @@
 <li>Request summary data to be recalculated from a given <code>GRACE</code> instance to a message queue destination.</li>
 </ul>
 <h2 id="agents">Agents</h2>
-<h2 id="listener-agent">Listener Agent</h2>
-<p>A agent running on <code>GRACE</code>.  The listener agent listens for one-time data replication requests (for either raw or summary data) on the message queue and launches an appropriate sub-process to send the data to the requested destination.</p>
-<p>It listens on the known queue <code>/gracc.&lt;db&gt;.requests</code> (as defined on <a href="../message-queues/">Message Queues</a>).  </p>
+<p><img alt="GRACC Agent Overview" src="../../images/AgentOverview.png" /></p>
+<h2 id="raw-agent">Raw Agent</h2>
+<p>An agent which listens to one or more message queues (typically, its own queue for replay information and one or more collector queues) for raw records.  Records are read off the queue and uploaded to the database.</p>
 <h2 id="summary-agent">Summary Agent</h2>
 <p>This agent has two responsibilities:</p>
 <ul>
@@ -200,8 +200,9 @@
 <p>This allows late raw records to be included in the summary information.</p>
 </li>
 </ul>
-<h2 id="raw-agent">Raw Agent</h2>
-<p>An agent which listens to one or more message queues (typically, its own queue for replay information and one or more collector queues) for raw records.  Records are read off the queue and uploaded to the database.</p>
+<h2 id="listener-agent">Listener Agent</h2>
+<p>A agent running on <code>GRACE</code>.  The listener agent listens for one-time data replication requests (for either raw or summary data) on the message queue and launches an appropriate sub-process to send the data to the requested destination.</p>
+<p>It listens on the known queue <code>/gracc.&lt;db&gt;.requests</code> (as defined on <a href="../message-queues/">Message Queues</a>).  </p>
 <h2 id="future-components">Future components</h2>
 <p>Components that will likely be needed in the future include:</p>
 <ul>
