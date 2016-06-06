@@ -105,17 +105,22 @@ The replay request indicates that a remote listener agent attached to an Elastic
 
 *Keys*:
 
-* `time_range`: A Lucene-formatted time range containing the data that should be resent.
+* `from` and `to`: An ISO 8601 formatted date & time string that determines the time range beginning and ending, respectively, of the data to be sent.
 * `kind`: What type of records should be resent (valid values are curently `raw` or `summary`).
-* `destination`: A queue on the same broker where records should be sent.  Should be a string value.
-* `filter`: A ElasticSearch-formatted query filter (JSON value).  Only records matching this filter should be sent.
+* `destination`: An exchange on the same broker where records should be sent.  Should be a string value.
+* `routing_key`: A routing key to be used when sending the data
+* `control` and `control_key`: (optional) Control channel that will be notified when the data stream starts and ends.  Further, it will receive any errors that may occur during the replay.
+* `filter`: (not implemented) A ElasticSearch-formatted query filter (JSON value).  Only records matching this filter should be sent.
 
 Example
-```
+```json
 {
-  "time_range": "now-3d",
+  "from": "2016-05-10T00:00:00",
+  "to": "2016-05-11T00:00:00",
   "kind": "raw",
-  "destination": "/grace.osg.raw",
+  "destination": "grace.osg.raw",
+  "control": "control-exchange",
+  "control_key": "control_routing_key",
   "filter": {
     "query": {
       "query_string": {
