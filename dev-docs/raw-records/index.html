@@ -167,6 +167,7 @@ the schema requirements are kept to a minimum. Some fields are expected by
 GRACC compenents so leaving them out will result in the records not being
 properly accounted:</p>
 <ul>
+<li>ResourceType</li>
 <li>CommonName</li>
 <li>VOName</li>
 <li>ReportableVOName</li>
@@ -188,26 +189,20 @@ and remapping.</p>
 <h3 id="identity-groups">Identity Groups</h3>
 <p>Identity groups are flattened by moving their sub-elements to the top level:</p>
 <ul>
-<li>RecordIdentity<ul>
+<li>RecordIdentity</li>
 <li>RecordId</li>
 <li>CreateTime</li>
-</ul>
-</li>
-<li>JobIdentity<ul>
+<li>JobIdentity</li>
 <li>GlobalJobId</li>
 <li>LocalJobId</li>
 <li>ProcessId (array)</li>
-</ul>
-</li>
-<li>UserIdentity<ul>
+<li>UserIdentity</li>
 <li>LocalUserId</li>
 <li>GlobalUsername</li>
 <li>CommonName</li>
 <li>DN</li>
 <li>VOName</li>
 <li>ReportableVOName</li>
-</ul>
-</li>
 </ul>
 <h3 id="durations">Durations</h3>
 <p>Duration fields are converted to seconds.
@@ -220,12 +215,14 @@ the top level:</p>
 <li>WallDuration</li>
 </ul>
 <h3 id="resource">Resource</h3>
-<p>Resources are transformed into a <code>&lt;description&gt;:&lt;value&gt;</code> map in the Resource
-field. The description is transformed to make it a valid field name 
-(spaces and dots are converted to dashes). Other properties are flattened 
-into the Resource map as <code>&lt;description&gt;_&lt;property_name&gt;:&lt;property_value&gt;</code>.</p>
+<p>Resources are transformed into a <code>&lt;description&gt;:&lt;value&gt;</code> map.
+The description is transformed to make it a valid field name 
+(spaces and dots are converted to dashes) prefixed with <code>Resource_</code>. 
+Other properties are flattened as <code>Resource_&lt;description&gt;_&lt;property_name&gt;:&lt;property_value&gt;</code>.</p>
+<p>The special Resource <code>ResourceType</code> is moved directly to the top level. ResourceType 
+<code>BatchPilot</code> is renamed <code>Payload</code> due to the former being misleading.</p>
 <p>TimeDuration and TimeInstant elements are likewise put in <code>&lt;type&gt;:&lt;value&gt;</code> maps 
-in their respective fields. Durations are converted to seconds, discrete times 
+with their respective prefixes. Durations are converted to seconds, discrete times 
 are ISO8601 strings.</p>
 <h3 id="other">Other</h3>
 <p>Any other elements are directly included in the top level. Properties of those elements are moved to fields named as <code>&lt;element&gt;_&lt;property&gt;</code>, e.g. <code>JobName_description</code>.</p>
@@ -294,15 +291,13 @@ are ISO8601 strings.</p>
     "Status_description": "Condor Exit Status",
     "WallDuration": 617,
     "WallDuration_description": "Was entered in seconds"
-    "TimeDuration": {
-        "CommittedSuspensionTime": 0,
-        "CommittedTime": 617,
-        "CumulativeSuspensionTime": 0,
-        "LocalSysCpu": 0,
-        "LocalUserCpu": 0,
-        "RemoteSysCpu": 18,
-        "RemoteUserCpu": 0
-    },
+    "TimeDuration_CommittedSuspensionTime": 0,
+    "TimeDuration_CommittedTime": 617,
+    "TimeDuration_CumulativeSuspensionTime": 0,
+    "TimeDuration_LocalSysCpu": 0,
+    "TimeDuration_LocalUserCpu": 0,
+    "TimeDuration_RemoteSysCpu": 18,
+    "TimeDuration_RemoteUserCpu": 0,
     "CpuDuration": 18,
     "CpuDuration_system": 18,
     "CpuDuration_system_description": "Was entered in seconds",
@@ -317,14 +312,12 @@ are ISO8601 strings.</p>
     "NodeCount_metric": "max",
     "Processors": "1",
     "Processors_metric": "max",
-    "Resource": {
-        "AccountingGroup": "group_cmsprod.cmsuser",
-        "CondorMyType": "Job",
-        "ExitBySignal": "false",
-        "ExitCode": "0",
-        "ResourceType": "Batch",
-        "condor-JobStatus": "4"
-    },
+    "Resource_AccountingGroup": "group_cmsprod.cmsuser",
+    "Resource_CondorMyType": "Job",
+    "Resource_ExitBySignal": "false",
+    "Resource_ExitCode": "0",
+    "Resource_condor-JobStatus": "4",
+    "ResourceType": "Batch",
     "Network": "0",
     "Network_metric": "total",
     "Network_phaseUnit": 617,
