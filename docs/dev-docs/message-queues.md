@@ -94,6 +94,7 @@ Example
   "to": "2016-05-11T00:00:00",
   "kind": "raw",
   "destination": "grace.osg.raw",
+  "routing_key": "grace.osg.raw",
   "control": "control-exchange",
   "control_key": "control_routing_key",
   "filter": {
