@@ -190,19 +190,33 @@
 <h2 id="summary-agent">Summary Agent</h2>
 <p>This agent has two responsibilities:</p>
 <ul>
-<li>Listening to a message queue (<code>/grace.&lt;db&gt;.summary</code>) for summary records.  It fetchs the records from the queue and uploads them into ElasticSearch.</li>
+<li>Listening to a message queue (<code>/grace.&lt;db&gt;.summary</code>) for summary records.  It fetches the records from the queue and uploads them into ElasticSearch.  This is implemented in Logstash.</li>
 <li>
-<p>Periodically request new summaries be made by the Listener agent.  We envision:</p>
+<p>Periodically request new summaries be made by the Listener agent.  The current behavior of the summarizer is</p>
 <ul>
-<li>Every 15 minutes, we re-summarize the past 2 days of data.</li>
-<li>Every 12 hours, we re-summarize the past 30 days of data.</li>
+<li>Every 15 minutes, we re-summarize the past 7 days of data.</li>
 </ul>
-<p>This allows late raw records to be included in the summary information.</p>
 </li>
 </ul>
+<p>The summary agent also comes with a command line option to re-summarize larger period of times.  The command line is <code>graccsummarizer</code>.  The <code>graccsummarizer</code> takes a date range as arguments, further help with the command line can be found with the help option.</p>
 <h2 id="listener-agent">Listener Agent</h2>
 <p>A agent running on <code>GRACE</code>.  The listener agent listens for one-time data replication requests (for either raw or summary data) on the message queue and launches an appropriate sub-process to send the data to the requested destination.</p>
 <p>It listens on the known queue <code>/gracc.&lt;db&gt;.requests</code> (as defined on <a href="../message-queues/">Message Queues</a>).  </p>
+<h3 id="integrate-oim-information">Integrate OIM Information</h3>
+<p>The listener agent integrates OIM information for ProjectNames.  For each summary data request it performs these operations:</p>
+<ol>
+<li>Download the Project information in XML from a OIM URL.</li>
+<li>Parse the XML Project information into a hash keyed by the ProjectName.</li>
+<li>For each summary record, search for the project information in the OIM hashed data structure, and append the information to the record.</li>
+</ol>
+<p>The attributes copied to the record are:</p>
+<ul>
+<li><em>PI Name</em> - The name of the principle investigator for the project.</li>
+<li><em>Organization</em> - Institution or organization that the project belogs.</li>
+<li><em>Department</em> - Department inside the institution.</li>
+<li>Field Of Science - Field of science inside the origanization.</li>
+</ul>
+<p>We currently do not support the addition of "Sponsor Campus Grids".</p>
 <h2 id="future-components">Future components</h2>
 <p>Components that will likely be needed in the future include:</p>
 <ul>
