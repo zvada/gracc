@@ -36,13 +36,12 @@ An agent which listens to one or more message queues (typically, its own queue f
 
 This agent has two responsibilities:
 
-   * Listening to a message queue (`/grace.<db>.summary`) for summary records.  It fetchs the records from the queue and uploads them into ElasticSearch.
-   * Periodically request new summaries be made by the Listener agent.  We envision:
+   * Listening to a message queue (`/grace.<db>.summary`) for summary records.  It fetches the records from the queue and uploads them into ElasticSearch.  This is implemented in Logstash.
+   * Periodically request new summaries be made by the Listener agent.  The current behavior of the summarizer is
 
-      * Every 15 minutes, we re-summarize the past 2 days of data.
-      * Every 12 hours, we re-summarize the past 30 days of data.
+      * Every 15 minutes, we re-summarize the past 7 days of data.
 
-      This allows late raw records to be included in the summary information.
+The summary agent also comes with a command line option to re-summarize larger period of times.  The command line is `graccsummarizer`.  The `graccsummarizer` takes a date range as arguments, further help with the command line can be found with the help option.
 
 ## Listener Agent
 
@@ -50,9 +49,22 @@ A agent running on `GRACE`.  The listener agent listens for one-time data replic
 
 It listens on the known queue `/gracc.<db>.requests` (as defined on [Message Queues](message-queues.md)).  
 
+### Integrate OIM Information
 
+The listener agent integrates OIM information for ProjectNames.  For each summary data request it performs these operations:
 
+1. Download the Project information in XML from a OIM URL.
+2. Parse the XML Project information into a hash keyed by the ProjectName.
+3. For each summary record, search for the project information in the OIM hashed data structure, and append the information to the record.
 
+The attributes copied to the record are:
+
+* *PI Name* - The name of the principle investigator for the project.
+* *Organization* - Institution or organization that the project belogs.
+* *Department* - Department inside the institution.
+* Field Of Science - Field of science inside the origanization.
+
+We currently do not support the addition of "Sponsor Campus Grids".
 
 Future components
 -----------------
