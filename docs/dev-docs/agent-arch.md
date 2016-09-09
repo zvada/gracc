@@ -59,10 +59,10 @@ The listener agent integrates OIM information for ProjectNames.  For each summar
 
 The attributes copied to the record are:
 
-* *PI Name* - The name of the principle investigator for the project.
-* *Organization* - Institution or organization that the project belogs.
-* *Department* - Department inside the institution.
-* Field Of Science - Field of science inside the origanization.
+* **PI Name** - The name of the principle investigator for the project.
+* **Organization** - Institution or organization that the project belogs.
+* **Department** - Department inside the institution.
+* **Field Of Science** - Field of science inside the Organization.
 
 We currently do not support the addition of "Sponsor Campus Grids".
 
