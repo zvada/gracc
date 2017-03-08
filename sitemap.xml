@@ -3,8 +3,8 @@
 
     
     <url>
-     <loc>None/</loc>
-     <lastmod>2016-09-09</lastmod>
+     <loc>/</loc>
+     <lastmod>2017-03-08</lastmod>
      <changefreq>daily</changefreq>
     </url>
     
@@ -12,20 +12,20 @@
     
         
     <url>
-     <loc>None/dev-docs/agent-arch/</loc>
-     <lastmod>2016-09-09</lastmod>
+     <loc>/user/standard/</loc>
+     <lastmod>2017-03-08</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
-     <loc>None/dev-docs/message-queues/</loc>
-     <lastmod>2016-09-09</lastmod>
+     <loc>/user/grafana/</loc>
+     <lastmod>2017-03-08</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
-     <loc>None/dev-docs/raw-records/</loc>
-     <lastmod>2016-09-09</lastmod>
+     <loc>/user/direct/</loc>
+     <lastmod>2017-03-08</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
@@ -34,8 +34,30 @@
     
         
     <url>
-     <loc>None/dev-docs/install-grace-db/</loc>
-     <lastmod>2016-09-09</lastmod>
+     <loc>/dev-docs/agent-arch/</loc>
+     <lastmod>2017-03-08</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>/dev-docs/message-queues/</loc>
+     <lastmod>2017-03-08</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>/dev-docs/raw-records/</loc>
+     <lastmod>2017-03-08</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    
+
+    
+        
+    <url>
+     <loc>/dev-docs/install-grace-db/</loc>
+     <lastmod>2017-03-08</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
