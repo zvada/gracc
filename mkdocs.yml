@@ -6,6 +6,10 @@ theme: readthedocs
 
 pages:
   - 'Introduction': 'index.md'
+  - User Guide:
+    - Standard Interfaces: user/standard.md
+    - Custom Grafana: user/grafana.md
+    - Direct Queries: user/direct.md
   - Development Docs:
     - Agent Architecture: dev-docs/agent-arch.md
     - Message Queues: dev-docs/message-queues.md
