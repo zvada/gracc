@@ -229,6 +229,31 @@
             "location": "/dev-docs/install-grace-db/#log-files", 
             "text": "By default, log files go into  /var/log/gracc .", 
             "title": "Log files"
+        }, 
+        {
+            "location": "/dev-docs/backups/", 
+            "text": "Backup Configuration\n\n\nBackup Sources\n\n\nGRACC backup sources come from listening and duplicating all raw records sent to the system through the RabbitMQ system.  The \nGRACC Archiver\n listens to the raw RabbitMQ exchanges.  It listens to both the \ngracc.osg.raw\n and the \ngracc.osg-transfer.raw\n exchanges.\n\n\nThe archive agent stores the records into a tar.gz file located in \n/var/lib/graccarchive/sandbox\n.  On new days (or agent crashes) the tar.gz files are atomically copied to \n/var/lib/graccarchive/output\n.  The transfer archiver similarily stores files in \n/var/lib/graccarchive/sandbox-transfer\n and \n/var/lib/graccarchive/output-transfer\n.\n\n\nThe archive agent is configured in \n/etc/graccarchive/conf\n.  It uses systemd template units to run both the raw jobs and raw transfer archivers at the same time.\n\n\nBackup Location\n\n\nThe backups are copied to FNAL by the \ngracc-backup\n tool.  This uses SystemD timer and service files to periodically copy the output \n.tar.gz\n files to FNAL.  The final destination (gsiftp) of the files is configured in the *.service files with the tool\n\n\nRestore Operation\n\n\nThe restore operation uses the \nunarchive\n tool distributed with the GRACC Archiver agent.  The workflow of a restore is:\n\n\n\n\nCopy the backup file from the backup location.\n\n\nRun the \nunarchive\n tool from the GRACC Archiver on the compressed .tar.gz file, with command line arguments for the RabbitMQ parameters.", 
+            "title": "GRACE Backup Documentation"
+        }, 
+        {
+            "location": "/dev-docs/backups/#backup-configuration", 
+            "text": "", 
+            "title": "Backup Configuration"
+        }, 
+        {
+            "location": "/dev-docs/backups/#backup-sources", 
+            "text": "GRACC backup sources come from listening and duplicating all raw records sent to the system through the RabbitMQ system.  The  GRACC Archiver  listens to the raw RabbitMQ exchanges.  It listens to both the  gracc.osg.raw  and the  gracc.osg-transfer.raw  exchanges.  The archive agent stores the records into a tar.gz file located in  /var/lib/graccarchive/sandbox .  On new days (or agent crashes) the tar.gz files are atomically copied to  /var/lib/graccarchive/output .  The transfer archiver similarily stores files in  /var/lib/graccarchive/sandbox-transfer  and  /var/lib/graccarchive/output-transfer .  The archive agent is configured in  /etc/graccarchive/conf .  It uses systemd template units to run both the raw jobs and raw transfer archivers at the same time.", 
+            "title": "Backup Sources"
+        }, 
+        {
+            "location": "/dev-docs/backups/#backup-location", 
+            "text": "The backups are copied to FNAL by the  gracc-backup  tool.  This uses SystemD timer and service files to periodically copy the output  .tar.gz  files to FNAL.  The final destination (gsiftp) of the files is configured in the *.service files with the tool", 
+            "title": "Backup Location"
+        }, 
+        {
+            "location": "/dev-docs/backups/#restore-operation", 
+            "text": "The restore operation uses the  unarchive  tool distributed with the GRACC Archiver agent.  The workflow of a restore is:   Copy the backup file from the backup location.  Run the  unarchive  tool from the GRACC Archiver on the compressed .tar.gz file, with command line arguments for the RabbitMQ parameters.", 
+            "title": "Restore Operation"
         }
     ]
 }

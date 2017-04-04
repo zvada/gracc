@@ -61,6 +61,12 @@
      <changefreq>daily</changefreq>
     </url>
         
+    <url>
+     <loc>/dev-docs/backups/</loc>
+     <lastmod>2017-04-04</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
     
 
 </urlset>
