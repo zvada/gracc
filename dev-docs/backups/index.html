@@ -172,8 +172,13 @@
 <p>The restore operation uses the <code>graccunarchiver</code> tool distributed with the GRACC Archiver agent.  The workflow of a restore is:</p>
 <ol>
 <li>Copy the backup file from the backup location.  You will likely need to use <code>globus-url-copy</code> in order to copy the files back from the backup location.</li>
-<li>Run the <code>graccunarchiver</code> tool from the GRACC Archiver on the compressed .tar.gz file, with command line arguments for the RabbitMQ parameters.<pre><code>graccunarchiver &lt;rabbitmq_url&gt; gracc.osg.raw gracc-2017-04-04.tar.gz
+<li>
+<p>Run the <code>graccunarchiver</code> tool from the GRACC Archiver on the compressed .tar.gz file, with command line arguments for the RabbitMQ parameters.</p>
+<pre><code>graccunarchiver &lt;rabbitmq_url&gt; gracc.osg.raw gracc-2017-04-04.tar.gz
 </code></pre>
+</li>
+<li>
+<p>After restoring the raw jobs and transfers, it may be necessary to re-summarize the restored time-period with the <code>graccsummarizer</code> tool.</p>
 </li>
 </ol>
 <div class="admonition note">
