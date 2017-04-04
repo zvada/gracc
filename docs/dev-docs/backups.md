@@ -20,8 +20,8 @@ The backups are copied to FNAL by the [gracc-backup](https://github.com/openscie
 Restore Operation
 -----------------
 
-The restore operation uses the `unarchive` tool distributed with the GRACC Archiver agent.  The workflow of a restore is:
+The restore operation uses the `graccunarchiver` tool distributed with the GRACC Archiver agent.  The workflow of a restore is:
 
 1. Copy the backup file from the backup location.
-2. Run the `unarchive` tool from the GRACC Archiver on the compressed .tar.gz file, with command line arguments for the RabbitMQ parameters.
+2. Run the `graccunarchiver` tool from the GRACC Archiver on the compressed .tar.gz file, with command line arguments for the RabbitMQ parameters.
 
