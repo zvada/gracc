@@ -27,6 +27,8 @@ The restore operation uses the `graccunarchiver` tool distributed with the GRACC
 
         graccunarchiver <rabbitmq_url> gracc.osg.raw gracc-2017-04-04.tar.gz
 
+3. After restoring the raw jobs and transfers, it may be necessary to re-summarize the restored time-period with the `graccsummarizer` tool.
+
 !!! note
     If the backup tar.gz file was created during a crash of the agent or system, it's possible that the tar.gz end may be corrupted and you may see CRC or other errors.  The vast majority of the records are fine, but the last few may be corrupted and un-retrievable.
 
