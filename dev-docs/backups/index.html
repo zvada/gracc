@@ -169,10 +169,10 @@
 <h2 id="backup-location">Backup Location</h2>
 <p>The backups are copied to FNAL by the <a href="https://github.com/opensciencegrid/gracc-backup">gracc-backup</a> tool.  This uses SystemD timer and service files to periodically copy the output <code>.tar.gz</code> files to FNAL.  The final destination (gsiftp) of the files is configured in the *.service files with the tool</p>
 <h2 id="restore-operation">Restore Operation</h2>
-<p>The restore operation uses the <code>unarchive</code> tool distributed with the GRACC Archiver agent.  The workflow of a restore is:</p>
+<p>The restore operation uses the <code>graccunarchiver</code> tool distributed with the GRACC Archiver agent.  The workflow of a restore is:</p>
 <ol>
 <li>Copy the backup file from the backup location.</li>
-<li>Run the <code>unarchive</code> tool from the GRACC Archiver on the compressed .tar.gz file, with command line arguments for the RabbitMQ parameters.</li>
+<li>Run the <code>graccunarchiver</code> tool from the GRACC Archiver on the compressed .tar.gz file, with command line arguments for the RabbitMQ parameters.</li>
 </ol>
               
             </div>
