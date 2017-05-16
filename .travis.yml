@@ -3,15 +3,15 @@ env:
   - GIT_NAME: "'Markdown autodeploy'"
   - GIT_EMAIL: djw8605@gmail.com
   - GH_REF: github.com/opensciencegrid/gracc.git
-  - secure: M5+o0pnYo7ax4inaGZm6cxthdQHjMehlA+7L8vzB2KaOYOD36LfqogKimFBR5c85HwSXyYFeJOQ3S9Ir4hnb6F815u2bc1OKXswXi3uVwqcMIccrFgWapjknC5Yl49JCEXRP4ebJNOme8+vl0kS/cSIIMU15E9+QQEdfpds324rrkaWVS05Y4E1ud9pt9pU3y9jYrdtqNnl3XFT64aPUpmmIbq6swrPDTJIQlLh+3vMjgMNc2le+S7tguYF3ajwK/huVJii29br4BP4u2rEvIAi6qrFFOq9Kdy39/Rd4P7CrQkdM6JAYq0hpyZK8ael328OYg3F6B7Bgn931FG9KdZHZ8Sx5NpS813yPuhM/wDOeFV0g82cN1Ty8eaWYWFsCYUIuewCd1Pfq0LMZ6VASJ4UjR6Qj+xs8A57ueQL4B6yvM2mCxu+r5k0w97kzkkmgYRuwpbNJKQbxNYG2zWrUKEA780w22/qz3kYQHcdwy7RS4eVE5T8LoHyLo3wCjLQl1B9RRUXgvOfoMrl6Cef/6bGO/Tt9W2++SJTED40M8vWhLUG3LAQcwYrJ+nbUfx4sMX4Xjjwf/eMhfhBh7nCCNTJHkK3G+lJLlhjkc3ROD4kPROtCYgeYmTN0TKPlBlfq8rFKyX3X3XRK8zYXgWKqlCB2V6YTXupb7eVe3SmYap8=
 language: python
 before_script:
 - pip install mkdocs
 - pip install MarkdownHighlight
 script:
+- if [ "${TRAVIS_PULL_REQUEST}" = "false" ]; then openssl aes-256-cbc -K $encrypted_deeca9072356_key -iv $encrypted_deeca9072356_iv -in deploy-key.enc -out deploy-key -d; - chmod 600 deploy-key; eval `ssh-agent -s`; ssh-add deploy-key; fi
 - git config user.name "Automatic Publish"
 - git config user.email "djw8605@gmail.com"
-- git remote add gh-token "https://${GH_TOKEN}@${GH_REF}";
+- git remote add gh-token "${GH_REF}";
 - git fetch gh-token && git fetch gh-token gh-pages:gh-pages;
 - if [ "${TRAVIS_PULL_REQUEST}" = "false" ]; then PYTHONPATH=src/ mkdocs gh-deploy -v --clean --remote-name gh-token; fi;
 notifications:
