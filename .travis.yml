@@ -2,7 +2,7 @@ env:
   global:
   - GIT_NAME: "'Markdown autodeploy'"
   - GIT_EMAIL: djw8605@gmail.com
-  - GH_REF: github.com/opensciencegrid/gracc.git
+  - GH_REF: git@github.com:opensciencegrid/gracc.git
 language: python
 before_script:
 - pip install mkdocs
