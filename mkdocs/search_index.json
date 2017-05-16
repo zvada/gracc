@@ -254,6 +254,136 @@
             "location": "/dev-docs/backups/#restore-operation", 
             "text": "The restore operation uses the  graccunarchiver  tool distributed with the GRACC Archiver agent.  The workflow of a restore is:   Copy the backup file from the backup location.  You will likely need to use  globus-url-copy  in order to copy the files back from the backup location.   Run the  graccunarchiver  tool from the GRACC Archiver on the compressed .tar.gz file, with command line arguments for the RabbitMQ parameters.  graccunarchiver  rabbitmq_url  gracc.osg.raw gracc-2017-04-04.tar.gz    After restoring the raw jobs and transfers, it may be necessary to re-summarize the restored time-period with the  graccsummarizer  tool.     Note  If the backup tar.gz file was created during a crash of the agent or system, it's possible that the tar.gz end may be corrupted and you may see CRC or other errors.  The vast majority of the records are fine, but the last few may be corrupted and un-retrievable.", 
             "title": "Restore Operation"
+        }, 
+        {
+            "location": "/ops/services/", 
+            "text": "GRACC Services\n\n\nThese are the services the comprise the GRACC system, and details on\nwhere and how they are currently deployed on GRACE. \n\n\n\n\nItems marked with !! should be redesigned for production.\n\n\nItems marked with ?? should be evaluated for removal.\n  (note: FIFE services will be moved to another Elasticsearch cluster \"soon\")\n\n\n\n\nExternal\n\n\nRabbitMQ\n\n\n\n\nRunning at the GOC\n\n\nITB: event-itb.grid.iu.edu:5672, :5671 (TLS), :15671 (HTTPS admin)\n\n\nProduction: event.grid.iu.edu:5672, :5671 (TLS), :15671 (HTTPS admin)\n\n\n\n\nHead Node (\ngratiav2-1\n)\n\n\nOpenstack limits external access to ssh (:22) and http (:80 and :443).\n\n\nElasticsearch (ingest node)\n\n\n\n\nInstalled from official elastic repository\n\n\nConfig in /etc/elasticsearch\n\n\nRunning under systemd: \nelasticsearch.service\n\n\nListening at:\n\n\nhttp://0.0.0.0:9200 and :9300\n\n\nhttps://gracc.opensciencegrid.org/e/\n\n\n?? https://fifemon-es.fnal.gov\n\n\n\n\n\n\nExternal access requires certificate from GRACC private CA\n\n\nCerts and keys in \n/etc/nginx/certs\n\n\nRun \nmake_cert COMMON_NAME\n to generate and sign a new certificate\n\n\n\n\n\n\nnginx allows very limited read-only access through public endpoints\n\n\n\n\nElasticsearch (query node)\n\n\n\n\n!! Manual copy of ingest node (\ns/elasticsearch/elasticsearch-ro/\n)\n\n\nConfig in \n/etc/elasticsearch-ro\n\n\nRunning under systemd: \nelasticsearch-ro.service\n\n\nListening at:\n\n\nhttp://localhost:9201\n\n\nhttps://gracc.opensciencegrid.org/q/\n\n\nIncludes \nreadonlyrest\n plugin to allow limited unauthenticated read-only access \n  from Kibana, Grafana, and to public queries. Configured in \nelasticsearch.yml\n\n  https://readonlyrest.com\n\n\n\n\nGRACC Collectors and Stash agents\n\n\nGRACC Collectors (\ngracc-collector\n) accept records in formats provided by Gratia \nprobes and collectors, transform them into GRACC JSON documents, and send them to \nthe appropriate RabbitMQ exchange, which by convention is \ngracc.$STREAM.raw\n.\n\n\nRaw Stash agents (\ngracc-stash-raw\n) create a queue in RabbitMQ that is bound the the appropriate\nraw exchange, do minor manipulations to the documents (add checksum, calculate derived fields),\nand index the documents into elasticsearch (\ngracc.$STREAM.raw$N-$YYYY.$MM\n), where \n$N\n is a \nmonotonic schema version number. !! A cron job, currently running under kretzke, generates aliases \nin Elasticsearch each month from \ngracc.$STREAM.raw$N-$YYYY.$MM\n to \ngracc.$STREAM.raw-$YYYY.$MM\n.\n\n\nSummary Stash agents (\ngracc-stash-summary\n) create a queue in RabbitMQ that is bound the the appropriate\nsummary exchange, do minor manipulations to the documents (add checksum, calculate derived fields),\nand index the documents into elasticsearch (\ngracc.$STREAM.summary$N-$YYYY\n), where \n$N\n is a \nmonotonic schema version number. !! Aliases are manually cretated in Elasticsearch from \n\ngracc.$STREAM.summary$N-$YYYY\n to \ngracc.$STREAM.summary\n (note just \none\n alias for all years).\n\n\n\n\nRunning under docker, via docker-compose\n\n\nConfig in \n/etc/gracc/docker/$STREAM\n\n\nWithin each directory is:\n\n\ndocker-compose.yml\n - defines services for the stream\n\n\n.env\n - common environment variables for the stream's services\n\n\n\n\n\n\n\n\nStreams\n\n\n\n\ngracc.osg\n - \"main\" job stream\n\n\nCollector listening at:\n\n\nhttp://localhost:8180\n\n\nhttp://gracc.opensciencegrid.org/gracc/osg\n\n\n\n\n\n\n\n\n\n\ngracc.osg-itb\n - ITB test stream\n\n\nCollector listening at:\n\n\nhttp://localhost:8181\n\n\nhttp://gracc.opensciencegrid.org/gracc/osg-itb\n\n\n\n\n\n\n\n\n\n\ngracc.osg-transfer\n - transfers stream\n\n\nCollector listening at:\n\n\nhttp://localhost:8182\n\n\nhttp://gracc.opensciencegrid.org/gracc/osg-transfer\n\n\n\n\n\n\n\n\n\n\n\n\nGRACC Request Agent\n\n\nThe Request agent (\ngracc-request\n) listens on a RabbitMQ exchange (\ngracc.$STREAM.requests\n) \nfor requests for \"replay\" or \"summarization\" of raw records for a given time period. The request \nincludes a RabbitMQ exhchange the records should be sent to.\n\n\n\n\n!! Installed from copr (https://copr.fedorainfracloud.org/coprs/djw8605/GRACC/)\n\n\nRunning under systemd: \ngraccreq.service\n\n\nConfig in \n/etc/graccreq/config.d/gracc-request.toml\n\n\n\n\nGRACC Summary Agent\n\n\nThe Summary agent (\ngracc-summary\n) periodically requests summarizations, and has a CLI to manually\nsummarize periods.\n\n\n\n\n!! Installed from copr (https://copr.fedorainfracloud.org/coprs/djw8605/GRACC/)\n\n\nRunning under systemd: \ngraccsumperiodic.service\n and \ngraccsumperiodic.timer\n\n\nConfig in \n/etc/graccsum/config.d/gracc-summary.toml\n\n\n\n\nGrafana\n\n\n\n\nInstalled from official Grafana yum repo\n\n\nRunning under systemd: \ngrafana-server.service\n\n\nConfig in \n/etc/grafana\n\n\nData in \n/var/lib/grafana\n\n\nListening at:\n\n\nhttp://localhost:3000\n\n\nhttps://gracc.opensciencegrid.org/\n\n\n\n\nKibana\n\n\n\n\nInstalled from official Elasticsearch yum repo\n\n\nRunning under systemd: \nkibana.service\n\n\nConfig in /etc/kibana\n\n\nListening at:\n\n\nhttp://localhost:5601\n\n\nhttps://gracc.opensciencegrid.org/kibana/\n\n\nreadonlyrest\n Elasticsearch plugin controls access, write actions require authentication\n  with basic auth, configured in \n/etc/elasticsearch-ro/elasticsearch.yml\n.\n\n\n\n\nPrometheus\n\n\nPrometheus is used for monitoring the nodes and services.\n\n\n\n\n!! Installed in \n/opt/prometheus\n\n\nConfig in \n/etc/prometheus\n\n\nData in \n/data/prometheus\n\n\nRunning under systemd: \nprometheus.service\n\n\nListening at:\n\n\nhttp://localhost:9090\n\n\nhttps://gracc.opensciencegrid.org/prometheus \n\n\n!! external access requires basic auth, \n/etc/nginx/conf.d/kibana.htpasswd\n\n\nlimited unauthenticated access to query endpoint\n\n\n\n\nPrometheus Exporters\n\n\nPrometheus exporters collect data from services and present them for collection by Prometheus.\n\n\nRabbitMQ Exporter\n\n\n\n\n!! manually run under docker (to be moved to docker-compose)\n\n\nconfiguration via env var\n\n\nRABBIT_URL=https://event-itb.grid.iu.edu:15671\n\n\nRABBIT_USER=$USER\n\n\nRABBIT_PASSWORD=$PASSWORD\n\n\n\n\n\n\nListening at http://localhost:9111\n\n\n\n\nNode Exporter\n\n\n\n\nInstalled at \n/opt/prometheus\n\n\nRun with systemd: \nprometheus-node-exporter.service\n\n\nListening at http://0.0.0.0:9100\n\n\n\n\nGraphite Exporter\n\n\nThe Graphite exporter accepts time-series data in graphite format and exposes it for \ncollection by prometheus.\n\n\n\n\nRunning under docker\n\n\nListening at:\n\n\nhttp://0.0.0.0:9100 (publish to prometheus)\n\n\nhttps://0.0.0.0:2003 (collect from graphite)\n\n\n\n\n\n\n\n\nNginx\n\n\nAll public services are proxied through nginx.\n\n\n\n\nInstalled from EPEL\n\n\nPrimary config in \n/etc/nginx/conf.d/default.conf\n\n\nRunning under systemd: \nnginx.service\n\n\nListening at:\n\n\nhttp://0.0.0.0:80\n\n\nhttp://0.0.0.0:443\n\n\nhttp://gracc.opensciencegrid.org\n\n\nhttps://gracc.opensciencegrid.org\n\n\n\n\nDocker\n\n\n\n\nRunning under systemd: \ndocker.service\n\n\nExtra config in \n/etc/systemd/system/docker.service.d\n\n\nContainer logs sent to journald; e.g. \nsudo journalctl CONTAINER_NAME=graccosg_gracc-collector_1\n\n\n\n\nPortainer\n\n\nPortainer is a web-based utility for monitoring and managing containers.\n\n\n\n\nrunning under docker\n\n\nlistening on http://0.0.0.0:9000\n\n\n!! not proxied through nginx, need to tunnel, e.g. \nssh -L 9000:localhost:9000 gracc.opensciencegrid.org\n\n\n\n\nData Nodes (\ngratiav2-2\n though \n-5\n)\n\n\nAnsible is set up on the head node to perform operations across all data \nnodes, e.g. \nsudo ansible elasticsearch -a 'uptime'\n. Configuration in\n\n/etc/ansible\n.\n\n\nElasticsearch\n\n\n\n\nInstalled from official elastic repository\n\n\nConfig in \n/etc/elasticsearch\n\n\nData in  \n/data/elasticsearch\n and \n/data2/elasticsearch\n\n\nListening at http://0.0.0.0:9200 and :9300\n\n\n\n\nPrometheus Exporters\n\n\nNode Exporter\n\n\n\n\nInstalled at \n/opt/prometheus\n\n\nRun with systemd: \nprometheus-elasticsearch-exporter.service\n\n\nListening at http://0.0.0.0:9100\n\n\n\n\nElasticsearch Exporter\n\n\n\n\nInstalled at \n/opt/prometheus\n\n\nRun with systemd: \nprometheus-node-exporter.service\n\n\nListening at http://0.0.0.0:9108", 
+            "title": "GRACE Operations"
+        }, 
+        {
+            "location": "/ops/services/#gracc-services", 
+            "text": "These are the services the comprise the GRACC system, and details on\nwhere and how they are currently deployed on GRACE.    Items marked with !! should be redesigned for production.  Items marked with ?? should be evaluated for removal.\n  (note: FIFE services will be moved to another Elasticsearch cluster \"soon\")", 
+            "title": "GRACC Services"
+        }, 
+        {
+            "location": "/ops/services/#external", 
+            "text": "", 
+            "title": "External"
+        }, 
+        {
+            "location": "/ops/services/#rabbitmq", 
+            "text": "Running at the GOC  ITB: event-itb.grid.iu.edu:5672, :5671 (TLS), :15671 (HTTPS admin)  Production: event.grid.iu.edu:5672, :5671 (TLS), :15671 (HTTPS admin)", 
+            "title": "RabbitMQ"
+        }, 
+        {
+            "location": "/ops/services/#head-node-gratiav2-1", 
+            "text": "Openstack limits external access to ssh (:22) and http (:80 and :443).", 
+            "title": "Head Node (gratiav2-1)"
+        }, 
+        {
+            "location": "/ops/services/#elasticsearch-ingest-node", 
+            "text": "Installed from official elastic repository  Config in /etc/elasticsearch  Running under systemd:  elasticsearch.service  Listening at:  http://0.0.0.0:9200 and :9300  https://gracc.opensciencegrid.org/e/  ?? https://fifemon-es.fnal.gov    External access requires certificate from GRACC private CA  Certs and keys in  /etc/nginx/certs  Run  make_cert COMMON_NAME  to generate and sign a new certificate    nginx allows very limited read-only access through public endpoints", 
+            "title": "Elasticsearch (ingest node)"
+        }, 
+        {
+            "location": "/ops/services/#elasticsearch-query-node", 
+            "text": "!! Manual copy of ingest node ( s/elasticsearch/elasticsearch-ro/ )  Config in  /etc/elasticsearch-ro  Running under systemd:  elasticsearch-ro.service  Listening at:  http://localhost:9201  https://gracc.opensciencegrid.org/q/  Includes  readonlyrest  plugin to allow limited unauthenticated read-only access \n  from Kibana, Grafana, and to public queries. Configured in  elasticsearch.yml \n  https://readonlyrest.com", 
+            "title": "Elasticsearch (query node)"
+        }, 
+        {
+            "location": "/ops/services/#gracc-collectors-and-stash-agents", 
+            "text": "GRACC Collectors ( gracc-collector ) accept records in formats provided by Gratia \nprobes and collectors, transform them into GRACC JSON documents, and send them to \nthe appropriate RabbitMQ exchange, which by convention is  gracc.$STREAM.raw .  Raw Stash agents ( gracc-stash-raw ) create a queue in RabbitMQ that is bound the the appropriate\nraw exchange, do minor manipulations to the documents (add checksum, calculate derived fields),\nand index the documents into elasticsearch ( gracc.$STREAM.raw$N-$YYYY.$MM ), where  $N  is a \nmonotonic schema version number. !! A cron job, currently running under kretzke, generates aliases \nin Elasticsearch each month from  gracc.$STREAM.raw$N-$YYYY.$MM  to  gracc.$STREAM.raw-$YYYY.$MM .  Summary Stash agents ( gracc-stash-summary ) create a queue in RabbitMQ that is bound the the appropriate\nsummary exchange, do minor manipulations to the documents (add checksum, calculate derived fields),\nand index the documents into elasticsearch ( gracc.$STREAM.summary$N-$YYYY ), where  $N  is a \nmonotonic schema version number. !! Aliases are manually cretated in Elasticsearch from  gracc.$STREAM.summary$N-$YYYY  to  gracc.$STREAM.summary  (note just  one  alias for all years).   Running under docker, via docker-compose  Config in  /etc/gracc/docker/$STREAM  Within each directory is:  docker-compose.yml  - defines services for the stream  .env  - common environment variables for the stream's services", 
+            "title": "GRACC Collectors and Stash agents"
+        }, 
+        {
+            "location": "/ops/services/#streams", 
+            "text": "gracc.osg  - \"main\" job stream  Collector listening at:  http://localhost:8180  http://gracc.opensciencegrid.org/gracc/osg      gracc.osg-itb  - ITB test stream  Collector listening at:  http://localhost:8181  http://gracc.opensciencegrid.org/gracc/osg-itb      gracc.osg-transfer  - transfers stream  Collector listening at:  http://localhost:8182  http://gracc.opensciencegrid.org/gracc/osg-transfer", 
+            "title": "Streams"
+        }, 
+        {
+            "location": "/ops/services/#gracc-request-agent", 
+            "text": "The Request agent ( gracc-request ) listens on a RabbitMQ exchange ( gracc.$STREAM.requests ) \nfor requests for \"replay\" or \"summarization\" of raw records for a given time period. The request \nincludes a RabbitMQ exhchange the records should be sent to.   !! Installed from copr (https://copr.fedorainfracloud.org/coprs/djw8605/GRACC/)  Running under systemd:  graccreq.service  Config in  /etc/graccreq/config.d/gracc-request.toml", 
+            "title": "GRACC Request Agent"
+        }, 
+        {
+            "location": "/ops/services/#gracc-summary-agent", 
+            "text": "The Summary agent ( gracc-summary ) periodically requests summarizations, and has a CLI to manually\nsummarize periods.   !! Installed from copr (https://copr.fedorainfracloud.org/coprs/djw8605/GRACC/)  Running under systemd:  graccsumperiodic.service  and  graccsumperiodic.timer  Config in  /etc/graccsum/config.d/gracc-summary.toml", 
+            "title": "GRACC Summary Agent"
+        }, 
+        {
+            "location": "/ops/services/#grafana", 
+            "text": "Installed from official Grafana yum repo  Running under systemd:  grafana-server.service  Config in  /etc/grafana  Data in  /var/lib/grafana  Listening at:  http://localhost:3000  https://gracc.opensciencegrid.org/", 
+            "title": "Grafana"
+        }, 
+        {
+            "location": "/ops/services/#kibana", 
+            "text": "Installed from official Elasticsearch yum repo  Running under systemd:  kibana.service  Config in /etc/kibana  Listening at:  http://localhost:5601  https://gracc.opensciencegrid.org/kibana/  readonlyrest  Elasticsearch plugin controls access, write actions require authentication\n  with basic auth, configured in  /etc/elasticsearch-ro/elasticsearch.yml .", 
+            "title": "Kibana"
+        }, 
+        {
+            "location": "/ops/services/#prometheus", 
+            "text": "Prometheus is used for monitoring the nodes and services.   !! Installed in  /opt/prometheus  Config in  /etc/prometheus  Data in  /data/prometheus  Running under systemd:  prometheus.service  Listening at:  http://localhost:9090  https://gracc.opensciencegrid.org/prometheus   !! external access requires basic auth,  /etc/nginx/conf.d/kibana.htpasswd  limited unauthenticated access to query endpoint", 
+            "title": "Prometheus"
+        }, 
+        {
+            "location": "/ops/services/#prometheus-exporters", 
+            "text": "Prometheus exporters collect data from services and present them for collection by Prometheus.", 
+            "title": "Prometheus Exporters"
+        }, 
+        {
+            "location": "/ops/services/#rabbitmq-exporter", 
+            "text": "!! manually run under docker (to be moved to docker-compose)  configuration via env var  RABBIT_URL=https://event-itb.grid.iu.edu:15671  RABBIT_USER=$USER  RABBIT_PASSWORD=$PASSWORD    Listening at http://localhost:9111", 
+            "title": "RabbitMQ Exporter"
+        }, 
+        {
+            "location": "/ops/services/#node-exporter", 
+            "text": "Installed at  /opt/prometheus  Run with systemd:  prometheus-node-exporter.service  Listening at http://0.0.0.0:9100", 
+            "title": "Node Exporter"
+        }, 
+        {
+            "location": "/ops/services/#graphite-exporter", 
+            "text": "The Graphite exporter accepts time-series data in graphite format and exposes it for \ncollection by prometheus.   Running under docker  Listening at:  http://0.0.0.0:9100 (publish to prometheus)  https://0.0.0.0:2003 (collect from graphite)", 
+            "title": "Graphite Exporter"
+        }, 
+        {
+            "location": "/ops/services/#nginx", 
+            "text": "All public services are proxied through nginx.   Installed from EPEL  Primary config in  /etc/nginx/conf.d/default.conf  Running under systemd:  nginx.service  Listening at:  http://0.0.0.0:80  http://0.0.0.0:443  http://gracc.opensciencegrid.org  https://gracc.opensciencegrid.org", 
+            "title": "Nginx"
+        }, 
+        {
+            "location": "/ops/services/#docker", 
+            "text": "Running under systemd:  docker.service  Extra config in  /etc/systemd/system/docker.service.d  Container logs sent to journald; e.g.  sudo journalctl CONTAINER_NAME=graccosg_gracc-collector_1", 
+            "title": "Docker"
+        }, 
+        {
+            "location": "/ops/services/#portainer", 
+            "text": "Portainer is a web-based utility for monitoring and managing containers.   running under docker  listening on http://0.0.0.0:9000  !! not proxied through nginx, need to tunnel, e.g.  ssh -L 9000:localhost:9000 gracc.opensciencegrid.org", 
+            "title": "Portainer"
+        }, 
+        {
+            "location": "/ops/services/#data-nodes-gratiav2-2-though-5", 
+            "text": "Ansible is set up on the head node to perform operations across all data \nnodes, e.g.  sudo ansible elasticsearch -a 'uptime' . Configuration in /etc/ansible .", 
+            "title": "Data Nodes (gratiav2-2 though -5)"
+        }, 
+        {
+            "location": "/ops/services/#elasticsearch", 
+            "text": "Installed from official elastic repository  Config in  /etc/elasticsearch  Data in   /data/elasticsearch  and  /data2/elasticsearch  Listening at http://0.0.0.0:9200 and :9300", 
+            "title": "Elasticsearch"
+        }, 
+        {
+            "location": "/ops/services/#prometheus-exporters_1", 
+            "text": "", 
+            "title": "Prometheus Exporters"
+        }, 
+        {
+            "location": "/ops/services/#node-exporter_1", 
+            "text": "Installed at  /opt/prometheus  Run with systemd:  prometheus-elasticsearch-exporter.service  Listening at http://0.0.0.0:9100", 
+            "title": "Node Exporter"
+        }, 
+        {
+            "location": "/ops/services/#elasticsearch-exporter", 
+            "text": "Installed at  /opt/prometheus  Run with systemd:  prometheus-node-exporter.service  Listening at http://0.0.0.0:9108", 
+            "title": "Elasticsearch Exporter"
         }
     ]
 }

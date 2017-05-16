@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  <link rel="shortcut icon" href="../../img/favicon.ico">
+  <title>GRACE Operations - GRACC Documentation</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/highlight.css">
+  <link href="../../css/extra.css" rel="stylesheet">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "GRACE Operations";
+    var mkdocs_page_input_path = "ops/services.md";
+    var mkdocs_page_url = "/ops/services/";
+  </script>
+  
+  <script src="../../js/jquery-2.1.1.min.js"></script>
+  <script src="../../js/modernizr-2.8.3.min.js"></script>
+  <script type="text/javascript" src="../../js/highlight.pack.js"></script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href="../.." class="icon icon-home"> GRACC Documentation</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="current">
+	  
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../..">Introduction</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">User Guide</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../../user/standard/">Standard Interfaces</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../user/grafana/">Custom Grafana</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../user/direct/">Direct Queries</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Development Docs</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../../dev-docs/agent-arch/">Agent Architecture</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../dev-docs/message-queues/">Message Queues</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../dev-docs/raw-records/">Raw Records</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Operator Docs</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../../dev-docs/install-grace-db/">GRACE Installation</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../dev-docs/backups/">GRACE Backup Documentation</a>
+                </li>
+                <li class=" current">
+                    
+    <a class="current" href="./">GRACE Operations</a>
+    <ul class="subnav">
+            
+    <li class="toctree-l3"><a href="#gracc-services">GRACC Services</a></li>
+    
+        <ul>
+        
+            <li><a class="toctree-l4" href="#external">External</a></li>
+        
+            <li><a class="toctree-l4" href="#head-node-gratiav2-1">Head Node (gratiav2-1)</a></li>
+        
+            <li><a class="toctree-l4" href="#data-nodes-gratiav2-2-though-5">Data Nodes (gratiav2-2 though -5)</a></li>
+        
+        </ul>
+    
+
+    </ul>
+                </li>
+    </ul>
+	    </li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../..">GRACC Documentation</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>Operator Docs &raquo;</li>
+        
+      
+    
+    <li>GRACE Operations</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        <a href="https://github.com/opensciencegrid/gracc/edit/master/docs/ops/services.md"
+          class="icon icon-github"> Edit on GitHub</a>
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="gracc-services">GRACC Services</h1>
+<p>These are the services the comprise the GRACC system, and details on
+where and how they are currently deployed on GRACE. </p>
+<ul>
+<li>Items marked with !! should be redesigned for production.</li>
+<li>Items marked with ?? should be evaluated for removal.
+  (note: FIFE services will be moved to another Elasticsearch cluster "soon")</li>
+</ul>
+<h2 id="external">External</h2>
+<h3 id="rabbitmq">RabbitMQ</h3>
+<ul>
+<li>Running at the GOC</li>
+<li>ITB: event-itb.grid.iu.edu:5672, :5671 (TLS), :15671 (HTTPS admin)</li>
+<li>Production: event.grid.iu.edu:5672, :5671 (TLS), :15671 (HTTPS admin)</li>
+</ul>
+<h2 id="head-node-gratiav2-1">Head Node (<code>gratiav2-1</code>)</h2>
+<p>Openstack limits external access to ssh (:22) and http (:80 and :443).</p>
+<h3 id="elasticsearch-ingest-node">Elasticsearch (ingest node)</h3>
+<ul>
+<li>Installed from official elastic repository</li>
+<li>Config in /etc/elasticsearch</li>
+<li>Running under systemd: <code>elasticsearch.service</code></li>
+<li>Listening at:<ul>
+<li>http://0.0.0.0:9200 and :9300</li>
+<li>https://gracc.opensciencegrid.org/e/</li>
+<li>?? https://fifemon-es.fnal.gov</li>
+</ul>
+</li>
+<li>External access requires certificate from GRACC private CA<ul>
+<li>Certs and keys in <code>/etc/nginx/certs</code></li>
+<li>Run <code>make_cert COMMON_NAME</code> to generate and sign a new certificate</li>
+</ul>
+</li>
+<li>nginx allows very limited read-only access through public endpoints</li>
+</ul>
+<h3 id="elasticsearch-query-node">Elasticsearch (query node)</h3>
+<ul>
+<li>!! Manual copy of ingest node (<code>s/elasticsearch/elasticsearch-ro/</code>)</li>
+<li>Config in <code>/etc/elasticsearch-ro</code></li>
+<li>Running under systemd: <code>elasticsearch-ro.service</code></li>
+<li>Listening at:</li>
+<li>http://localhost:9201</li>
+<li>https://gracc.opensciencegrid.org/q/</li>
+<li>Includes <code>readonlyrest</code> plugin to allow limited unauthenticated read-only access 
+  from Kibana, Grafana, and to public queries. Configured in <code>elasticsearch.yml</code>
+  https://readonlyrest.com</li>
+</ul>
+<h3 id="gracc-collectors-and-stash-agents">GRACC Collectors and Stash agents</h3>
+<p>GRACC Collectors (<code>gracc-collector</code>) accept records in formats provided by Gratia 
+probes and collectors, transform them into GRACC JSON documents, and send them to 
+the appropriate RabbitMQ exchange, which by convention is <code>gracc.$STREAM.raw</code>.</p>
+<p>Raw Stash agents (<code>gracc-stash-raw</code>) create a queue in RabbitMQ that is bound the the appropriate
+raw exchange, do minor manipulations to the documents (add checksum, calculate derived fields),
+and index the documents into elasticsearch (<code>gracc.$STREAM.raw$N-$YYYY.$MM</code>), where <code>$N</code> is a 
+monotonic schema version number. !! A cron job, currently running under kretzke, generates aliases 
+in Elasticsearch each month from <code>gracc.$STREAM.raw$N-$YYYY.$MM</code> to <code>gracc.$STREAM.raw-$YYYY.$MM</code>.</p>
+<p>Summary Stash agents (<code>gracc-stash-summary</code>) create a queue in RabbitMQ that is bound the the appropriate
+summary exchange, do minor manipulations to the documents (add checksum, calculate derived fields),
+and index the documents into elasticsearch (<code>gracc.$STREAM.summary$N-$YYYY</code>), where <code>$N</code> is a 
+monotonic schema version number. !! Aliases are manually cretated in Elasticsearch from 
+<code>gracc.$STREAM.summary$N-$YYYY</code> to <code>gracc.$STREAM.summary</code> (note just <em>one</em> alias for all years).</p>
+<ul>
+<li>Running under docker, via docker-compose</li>
+<li>Config in <code>/etc/gracc/docker/$STREAM</code></li>
+<li>Within each directory is:<ul>
+<li><code>docker-compose.yml</code> - defines services for the stream</li>
+<li><code>.env</code> - common environment variables for the stream's services</li>
+</ul>
+</li>
+</ul>
+<h4 id="streams">Streams</h4>
+<ul>
+<li><code>gracc.osg</code> - "main" job stream<ul>
+<li>Collector listening at:<ul>
+<li>http://localhost:8180</li>
+<li>http://gracc.opensciencegrid.org/gracc/osg</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><code>gracc.osg-itb</code> - ITB test stream<ul>
+<li>Collector listening at:<ul>
+<li>http://localhost:8181</li>
+<li>http://gracc.opensciencegrid.org/gracc/osg-itb</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><code>gracc.osg-transfer</code> - transfers stream<ul>
+<li>Collector listening at:<ul>
+<li>http://localhost:8182</li>
+<li>http://gracc.opensciencegrid.org/gracc/osg-transfer</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="gracc-request-agent">GRACC Request Agent</h3>
+<p>The Request agent (<code>gracc-request</code>) listens on a RabbitMQ exchange (<code>gracc.$STREAM.requests</code>) 
+for requests for "replay" or "summarization" of raw records for a given time period. The request 
+includes a RabbitMQ exhchange the records should be sent to.</p>
+<ul>
+<li>!! Installed from copr (https://copr.fedorainfracloud.org/coprs/djw8605/GRACC/)</li>
+<li>Running under systemd: <code>graccreq.service</code></li>
+<li>Config in <code>/etc/graccreq/config.d/gracc-request.toml</code></li>
+</ul>
+<h3 id="gracc-summary-agent">GRACC Summary Agent</h3>
+<p>The Summary agent (<code>gracc-summary</code>) periodically requests summarizations, and has a CLI to manually
+summarize periods.</p>
+<ul>
+<li>!! Installed from copr (https://copr.fedorainfracloud.org/coprs/djw8605/GRACC/)</li>
+<li>Running under systemd: <code>graccsumperiodic.service</code> and <code>graccsumperiodic.timer</code></li>
+<li>Config in <code>/etc/graccsum/config.d/gracc-summary.toml</code></li>
+</ul>
+<h3 id="grafana">Grafana</h3>
+<ul>
+<li>Installed from official Grafana yum repo</li>
+<li>Running under systemd: <code>grafana-server.service</code></li>
+<li>Config in <code>/etc/grafana</code></li>
+<li>Data in <code>/var/lib/grafana</code></li>
+<li>Listening at:</li>
+<li>http://localhost:3000</li>
+<li>https://gracc.opensciencegrid.org/</li>
+</ul>
+<h3 id="kibana">Kibana</h3>
+<ul>
+<li>Installed from official Elasticsearch yum repo</li>
+<li>Running under systemd: <code>kibana.service</code></li>
+<li>Config in /etc/kibana</li>
+<li>Listening at:</li>
+<li>http://localhost:5601</li>
+<li>https://gracc.opensciencegrid.org/kibana/</li>
+<li><code>readonlyrest</code> Elasticsearch plugin controls access, write actions require authentication
+  with basic auth, configured in <code>/etc/elasticsearch-ro/elasticsearch.yml</code>.</li>
+</ul>
+<h3 id="prometheus">Prometheus</h3>
+<p>Prometheus is used for monitoring the nodes and services.</p>
+<ul>
+<li>!! Installed in <code>/opt/prometheus</code></li>
+<li>Config in <code>/etc/prometheus</code></li>
+<li>Data in <code>/data/prometheus</code></li>
+<li>Running under systemd: <code>prometheus.service</code></li>
+<li>Listening at:</li>
+<li>http://localhost:9090</li>
+<li>https://gracc.opensciencegrid.org/prometheus </li>
+<li>!! external access requires basic auth, <code>/etc/nginx/conf.d/kibana.htpasswd</code></li>
+<li>limited unauthenticated access to query endpoint</li>
+</ul>
+<h3 id="prometheus-exporters">Prometheus Exporters</h3>
+<p>Prometheus exporters collect data from services and present them for collection by Prometheus.</p>
+<h4 id="rabbitmq-exporter">RabbitMQ Exporter</h4>
+<ul>
+<li>!! manually run under docker (to be moved to docker-compose)</li>
+<li>configuration via env var<ul>
+<li>RABBIT_URL=https://event-itb.grid.iu.edu:15671</li>
+<li>RABBIT_USER=$USER</li>
+<li>RABBIT_PASSWORD=$PASSWORD</li>
+</ul>
+</li>
+<li>Listening at http://localhost:9111</li>
+</ul>
+<h4 id="node-exporter">Node Exporter</h4>
+<ul>
+<li>Installed at <code>/opt/prometheus</code></li>
+<li>Run with systemd: <code>prometheus-node-exporter.service</code></li>
+<li>Listening at http://0.0.0.0:9100</li>
+</ul>
+<h4 id="graphite-exporter">Graphite Exporter</h4>
+<p>The Graphite exporter accepts time-series data in graphite format and exposes it for 
+collection by prometheus.</p>
+<ul>
+<li>Running under docker</li>
+<li>Listening at:<ul>
+<li>http://0.0.0.0:9100 (publish to prometheus)</li>
+<li>https://0.0.0.0:2003 (collect from graphite)</li>
+</ul>
+</li>
+</ul>
+<h3 id="nginx">Nginx</h3>
+<p>All public services are proxied through nginx.</p>
+<ul>
+<li>Installed from EPEL</li>
+<li>Primary config in <code>/etc/nginx/conf.d/default.conf</code></li>
+<li>Running under systemd: <code>nginx.service</code></li>
+<li>Listening at:</li>
+<li>http://0.0.0.0:80</li>
+<li>http://0.0.0.0:443</li>
+<li>http://gracc.opensciencegrid.org</li>
+<li>https://gracc.opensciencegrid.org</li>
+</ul>
+<h3 id="docker">Docker</h3>
+<ul>
+<li>Running under systemd: <code>docker.service</code></li>
+<li>Extra config in <code>/etc/systemd/system/docker.service.d</code></li>
+<li>Container logs sent to journald; e.g. <code>sudo journalctl CONTAINER_NAME=graccosg_gracc-collector_1</code></li>
+</ul>
+<h4 id="portainer">Portainer</h4>
+<p>Portainer is a web-based utility for monitoring and managing containers.</p>
+<ul>
+<li>running under docker</li>
+<li>listening on http://0.0.0.0:9000</li>
+<li>!! not proxied through nginx, need to tunnel, e.g. <code>ssh -L 9000:localhost:9000 gracc.opensciencegrid.org</code></li>
+</ul>
+<h2 id="data-nodes-gratiav2-2-though-5">Data Nodes (<code>gratiav2-2</code> though <code>-5</code>)</h2>
+<p>Ansible is set up on the head node to perform operations across all data 
+nodes, e.g. <code>sudo ansible elasticsearch -a 'uptime'</code>. Configuration in
+<code>/etc/ansible</code>.</p>
+<h3 id="elasticsearch">Elasticsearch</h3>
+<ul>
+<li>Installed from official elastic repository</li>
+<li>Config in <code>/etc/elasticsearch</code></li>
+<li>Data in  <code>/data/elasticsearch</code> and <code>/data2/elasticsearch</code></li>
+<li>Listening at http://0.0.0.0:9200 and :9300</li>
+</ul>
+<h3 id="prometheus-exporters_1">Prometheus Exporters</h3>
+<h4 id="node-exporter_1">Node Exporter</h4>
+<ul>
+<li>Installed at <code>/opt/prometheus</code></li>
+<li>Run with systemd: <code>prometheus-elasticsearch-exporter.service</code></li>
+<li>Listening at http://0.0.0.0:9100</li>
+</ul>
+<h4 id="elasticsearch-exporter">Elasticsearch Exporter</h4>
+<ul>
+<li>Installed at <code>/opt/prometheus</code></li>
+<li>Run with systemd: <code>prometheus-node-exporter.service</code></li>
+<li>Listening at http://0.0.0.0:9108</li>
+</ul>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="../../dev-docs/backups/" class="btn btn-neutral" title="GRACE Backup Documentation"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+      <p>Open Science Grid</p>
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+	  
+        </div>
+      </div>
+
+    </section>
+    
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+          <a href="https://github.com/opensciencegrid/gracc" class="fa fa-github" style="float: left; color: #fcfcfc"> GitHub</a>
+      
+      
+        <span><a href="../../dev-docs/backups/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+    </span>
+</div>
+    <script src="../../js/theme.js"></script>
+
+</body>
+</html>
