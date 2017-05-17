@@ -276,7 +276,9 @@ includes a RabbitMQ exhchange the records should be sent to.</p>
 summarize periods.</p>
 <ul>
 <li>!! Installed from copr (https://copr.fedorainfracloud.org/coprs/djw8605/GRACC/)</li>
-<li>Running under systemd: <code>graccsumperiodic.service</code> and <code>graccsumperiodic.timer</code></li>
+<li>Running under systemd: </li>
+<li>Every 15 minutes, resummarize the last 7 days: <code>graccsumperiodic.service</code> and <code>graccsumperiodic.timer</code></li>
+<li>Every 24 hours, resummarize the last 365 days: <code>graccsumperiodicyearly.service</code> and <code>graccsumperiodicyearly.timer</code></li>
 <li>Config in <code>/etc/graccsum/config.d/gracc-summary.toml</code></li>
 </ul>
 <h3 id="grafana">Grafana</h3>

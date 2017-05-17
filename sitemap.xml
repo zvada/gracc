@@ -4,7 +4,7 @@
     
     <url>
      <loc>/</loc>
-     <lastmod>2017-05-16</lastmod>
+     <lastmod>2017-05-17</lastmod>
      <changefreq>daily</changefreq>
     </url>
     
@@ -13,19 +13,19 @@
         
     <url>
      <loc>/user/standard/</loc>
-     <lastmod>2017-05-16</lastmod>
+     <lastmod>2017-05-17</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
      <loc>/user/grafana/</loc>
-     <lastmod>2017-05-16</lastmod>
+     <lastmod>2017-05-17</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
      <loc>/user/direct/</loc>
-     <lastmod>2017-05-16</lastmod>
+     <lastmod>2017-05-17</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
@@ -35,19 +35,19 @@
         
     <url>
      <loc>/dev-docs/agent-arch/</loc>
-     <lastmod>2017-05-16</lastmod>
+     <lastmod>2017-05-17</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
      <loc>/dev-docs/message-queues/</loc>
-     <lastmod>2017-05-16</lastmod>
+     <lastmod>2017-05-17</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
      <loc>/dev-docs/raw-records/</loc>
-     <lastmod>2017-05-16</lastmod>
+     <lastmod>2017-05-17</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
@@ -57,19 +57,19 @@
         
     <url>
      <loc>/dev-docs/install-grace-db/</loc>
-     <lastmod>2017-05-16</lastmod>
+     <lastmod>2017-05-17</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
      <loc>/dev-docs/backups/</loc>
-     <lastmod>2017-05-16</lastmod>
+     <lastmod>2017-05-17</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
      <loc>/ops/services/</loc>
-     <lastmod>2017-05-16</lastmod>
+     <lastmod>2017-05-17</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
