@@ -15,9 +15,9 @@ pages:
     - Message Queues: dev-docs/message-queues.md
     - Raw Records: dev-docs/raw-records.md
   - Operator Docs:
-    - GRACE Installation: dev-docs/install-grace-db.md
-    - GRACE Backup Documentation: dev-docs/backups.md
-    - GRACE Operations: ops/services.md
+    - Installation: dev-docs/install-grace-db.md
+    - Backup Documentation: dev-docs/backups.md
+    - Operations: ops/services.md
 
 extra_css: 
   - css/extra.css

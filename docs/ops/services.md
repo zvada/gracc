@@ -109,6 +109,65 @@ summarize periods.
 * Running under systemd: `graccsumperiodic.service` and `graccsumperiodic.timer`
 * Config in `/etc/graccsum/config.d/gracc-summary.toml`
 
+#### APEL reporting
+* Source at [OSG docker](https://hub.docker.com/r/opensciencegrid/gracc-apel/) 
+    * `docker {pull, run} opensciencegrid/gracc-apel`
+* Running under systemd: `gracc-apel.service` and `gracc-apel.timer`
+* Registered service certificate with [APEL admins](apel-admins@stfc.ac.uk) needed 
+    * in docker we use:
+    ```
+        $ openssl x509 -in /etc/grid-security/apel/apelcert.pem -noout -subject
+        subject= /DC=org/DC=opensciencegrid/O=Open Science Grid/OU=Services/CN=apel/hcc-grace.unl.edu
+    ```
+    * SELinux prevents inheritance of certificates, so this must be set on docker master node: `chcon -Rt svirt_sandbox_file_t /etc/grid-security/apel/`
+
+##### Configuring GRACC-APEL in systemd 
+* `gracc-apel.service` configure, enable, start, test
+```
+    $ cat /lib/systemd/system/gracc-apel.service 
+      [Unit]
+      Description=GRACC APEL reporting Docker container
+
+      [Service]
+      Type=oneshot
+      ExecStart=/bin/docker run -v /etc/grid-security/apel/apelcert.pem:/etc/grid-security/apel/apelcert.pem -v /etc/grid-security/apel/apelkey.pem:/etc/grid-security/apel/apelkey.pem opensciencegrid/gracc-apel
+
+    $ systemctl enabled gracc-apel.service
+    $ systemctl start gracc-apel.service
+    $ systemctl status gracc-apel.service
+```
+
+To run periodically:
+* `gracc-apel.timer` configure, enable, start
+```
+    $ cat /lib/systemd/system/gracc-apel.timer 
+    [Unit]
+    Description=Run GRACC-to-APEL reporting script
+
+    [Timer]
+    # Explicitly declare service that this timer is responsible for
+    Unit=gracc-apel.service
+    # Runs 'gracc-apel' relative to when the *timer-unit* has been activated
+    OnActiveSec=1hour
+    # Runs 'gracc-apel' relative to when *service-unit* was last deactivated
+    OnUnitInactiveSec=1hour
+
+    # Randomize runtime by a small amount each run.
+    RandomizedDelaySec=2min
+
+    [Install]
+    WantedBy=timers.target
+    $ systemctl enabled gracc-apel.timer
+    $ systemctl start gracc-apel.timer
+    $ systemctl status gracc-apel.timer
+```
+
+    * To check if `gracc-timer.timer` runs:
+```
+    $ systemctl list-timers *apel*
+    NEXT                         LEFT       LAST                         PASSED    UNIT             ACTIVATES
+    Mon 2017-05-22 17:48:37 CDT  21min left Mon 2017-05-22 16:46:40 CDT  40min ago gracc-apel.timer gracc-apel.service
+```
 
 ### Grafana
 
