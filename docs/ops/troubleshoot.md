@@ -22,4 +22,4 @@ __Symptom__:
 __Action__: 
 * `systemctl restart elasticsearch.service`
 * added to [check_mk](https://hcc-mon.unl.edu/red/check_mk/index.py?start_url=%2Fred%2Fcheck_mk%2Fview.py%3Fview_name%3Dhost%26host%3Dgracc.opensciencegrid.org)systemd monitoring for elasticsearch and elasticsearch-ro  
-* for continuous high rate disconnections in RabbitMQ contact [Marina Krenz](mvkrenz@iu.edu)
+* for continuous high rate disconnections in RabbitMQ contact [Marina Krenz](mailto:mvkrenz@iu.edu)
