@@ -18,6 +18,7 @@ pages:
     - Installation: dev-docs/install-grace-db.md
     - Backup Documentation: dev-docs/backups.md
     - Operations: ops/services.md
+    - Troubleshooting: ops/troubleshoot.md
 
 extra_css: 
   - css/extra.css
