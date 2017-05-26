@@ -2,6 +2,7 @@
 
 ## Helpful dashboards
 
+* [GRACC Service Status](https://gracc.opensciencegrid.org/dashboard/db/gracc-service-status?refresh=1m&orgId=1)
 * [GRACC Collector Stats](https://gracc.opensciencegrid.org/dashboard/db/gracc-collector-stats?refresh=1m&orgId=1)
 * [RabbitMQ queues](https://gracc.opensciencegrid.org/dashboard/db/rabbitmq-queues?refresh=1m&orgId=1)
 * [Probe Record Rate](https://gracc.opensciencegrid.org/dashboard/db/probe-record-rate?orgId=1&var-Probe=slurm:grid1.oscer.ou.edu) - example for given CE
