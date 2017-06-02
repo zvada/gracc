@@ -27,3 +27,14 @@ __Action__:
 * `systemctl restart elasticsearch.service`
 * added to [check_mk](https://hcc-mon.unl.edu/red/check_mk/index.py?start_url=%2Fred%2Fcheck_mk%2Fview.py%3Fview_name%3Dhost%26host%3Dgracc.opensciencegrid.org)systemd monitoring for elasticsearch and elasticsearch-ro  
 * for continuous high rate disconnections in RabbitMQ contact [Marina Krenz](mailto:mvkrenz@iu.edu)
+
+### GRACC-APEL
+
+#### Update missing records
+
+* It may happen site has problem with sending accouting data to GRACC in particular month so when fixed they ask us correct accoutning in APEL report. In such case do:
+    1) From `hcc-grace-itb.unl.edu` run manually `$ cd /root/gracc-apel/; ./apel_report YYYY MM`
+
+    2) Move file `$ mv /root/gracc-apel/MM_YYYY.apel /var/spool/apel/outgoing/12345678/1234567890abcd`
+
+    3) Send off `$ ssmsend`
