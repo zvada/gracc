@@ -19,6 +19,11 @@ pages:
     - Backup Documentation: dev-docs/backups.md
     - Operations: ops/services.md
     - Troubleshooting: ops/troubleshoot.md
+<<<<<<< HEAD
+=======
+  - Content Management:
+    - Corrections: content/corrections.md
+>>>>>>> upstream/master
 
 extra_css: 
   - css/extra.css
