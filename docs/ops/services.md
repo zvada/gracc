@@ -106,7 +106,9 @@ summarize periods.
 
 
 * !! Installed from copr (https://copr.fedorainfracloud.org/coprs/djw8605/GRACC/)
-* Running under systemd: `graccsumperiodic.service` and `graccsumperiodic.timer`
+* Running under systemd: 
+  * Every 15 minutes, resummarize the last 7 days: `graccsumperiodic.service` and `graccsumperiodic.timer`
+  * Every 24 hours, resummarize the last 365 days: `graccsumperiodicyearly.service` and `graccsumperiodicyearly.timer`
 * Config in `/etc/graccsum/config.d/gracc-summary.toml`
 
 #### APEL reporting
@@ -162,7 +164,7 @@ To run periodically:
     $ systemctl status gracc-apel.timer
 ```
 
-    * To check if `gracc-timer.timer` runs:
+* To check if `gracc-apel.timer` runs:
 ```
     $ systemctl list-timers *apel*
     NEXT                         LEFT       LAST                         PASSED    UNIT             ACTIVATES
