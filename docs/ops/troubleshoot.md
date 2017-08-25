@@ -38,3 +38,4 @@ __Action__:
     2) Move file `$ mv /root/gracc-apel/MM_YYYY.apel /var/spool/apel/outgoing/12345678/1234567890abcd`
 
     3) Send off `$ ssmsend`
+* WLCG reports generated from APEL accouting are stored [here](https://espace.cern.ch/WLCG-document-repository/Accounting/Forms/AllItems.aspx).
